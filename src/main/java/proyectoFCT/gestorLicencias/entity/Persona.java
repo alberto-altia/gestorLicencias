@@ -1,43 +1,38 @@
 package proyectoFCT.gestorLicencias.entity;
 
-import lombok.*;
-
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
 @Entity
-@Getter @Setter
-@NoArgsConstructor
 @Inheritance(strategy = InheritanceType.JOINED)
+@Table(name = "Persona")
 public class Persona {
 
-
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idPersona;
 
-    @Column(name = "DNI",nullable = false)
+    @Column(name = "DNI", nullable = false)
     private String DNI;
 
-    @Column(name = "nombre y apellidos",nullable = false)
+    @Column(name = "nombre_apellidos", nullable = false)
     private String nombreApellidos;
 
-    @Column(name = "fechaNacimiento",nullable = false)
+    @Column(name = "fechaNacimiento", nullable = false)
     private String fechaNacimiento;
 
-    @Column(name = "telefono",nullable = true)
-    private Long telefono;
+    @Column(name = "telefono", nullable = true)
+    private Integer telefono;
 
     @Column(name = "email", nullable = true)
     @Email
     private String email;
 
-    @OneToMany(mappedBy = "persona", cascade = CascadeType.ALL,orphanRemoval = true)
-    private List<PersonaEspecialidad> especialidadList = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL)
+    private Set<PersonaEspecialidad> personaEspecialidad;
 
-
-    public Persona(String dni, String nombre, String fecha, Long telefono, String email) {
+    public Persona(String dni, String nombre, String fecha, Integer telefono, String email) {
         this.DNI = dni;
         this.nombreApellidos = nombre;
         this.fechaNacimiento = fecha;

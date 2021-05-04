@@ -16,14 +16,14 @@ public class Club {
     @Id
     private Long idClub;
 
-    @Column(name = "licenciaClub",nullable = false)
+    @Column(name = "licenciaClub", nullable = false)
     private String licenciaClub;
 
-    @Column(name = "fechaCreacion",nullable = false)
+    @Column(name = "fechaCreacion", nullable = false)
     private String fechaCreacion;
 
     @ManyToOne
     @JoinColumn(name = "idPersona",
-            foreignKey = @ForeignKey(name="PERSONA_ID_FK"))
-    private Deportista deportista;
+            foreignKey = @ForeignKey(name = "PERSONA_ID_FK"))
+    private Persona persona;
 }
