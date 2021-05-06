@@ -11,13 +11,13 @@ public class PersonaEspecialidad {
     @EmbeddedId
     PersonaEspecialidadId id;
 
-    @MapsId("persona_id")
     @ManyToOne
+    @MapsId("idPersona")
     @JoinColumn(name = "persona_id")
     private Persona persona;
 
-    @MapsId("especialidad_id")
     @ManyToOne
+    @MapsId("idEspecialidad")
     @JoinColumn(name = "especialidad_id")
     private Especialidad especialidad;
 

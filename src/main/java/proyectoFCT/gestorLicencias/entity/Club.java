@@ -23,7 +23,12 @@ public class Club {
     private String fechaCreacion;
 
     @ManyToOne
-    @JoinColumn(name = "idPersona",
-            foreignKey = @ForeignKey(name = "PERSONA_ID_FK"))
-    private Persona persona;
+    @JoinColumn(name = "idDeportista",
+            foreignKey = @ForeignKey(name = "Deportista_Id_FK"))
+    private Deportista deportista;
+
+    @ManyToOne
+    @JoinColumn(name = "idEntrenador",
+            foreignKey = @ForeignKey(name = "Entrenador_Id_FK"))
+    private Entrenador entrenador;
 }
