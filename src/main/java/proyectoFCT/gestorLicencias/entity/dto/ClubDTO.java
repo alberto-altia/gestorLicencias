@@ -12,3 +12,4 @@ public class ClubDTO implements Serializable {
 
     private Entrenador entrenador;
 }
+//https://github.com/alberto-altia/gestorLicencias.git
