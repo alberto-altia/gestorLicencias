@@ -15,5 +15,9 @@ public class Juez extends Persona {
         super(dni, nombre, fecha, telefono, email);
         this.numLicenciaJuez = numLicenciaJuez;
     }
+
+    public Juez() {
+
+    }
 }
 

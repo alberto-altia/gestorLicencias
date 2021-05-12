@@ -1,5 +1,7 @@
 package proyectoFCT.gestorLicencias.entity;
 
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import java.util.Set;
@@ -7,6 +9,7 @@ import java.util.Set;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "Persona")
+@NoArgsConstructor
 public class Persona {
 
     @Id
@@ -35,7 +38,6 @@ public class Persona {
     public Persona(String dni, String nombre, String fecha, Integer telefono, String email) {
         this.DNI = dni;
         this.nombreApellidos = nombre;
-        this.fechaNacimiento = fecha;
         this.telefono = telefono;
         this.email = email;
     }

@@ -11,9 +11,5 @@ import java.util.List;
 @Repository
 public interface ClubRepository extends CrudRepository<Club,String> {
 
-//    List<Deportista> findDeportistasByClub (Club club);
-//
-//    List<Entrenador> findEntrenadorByClub (Club club);
-//
-//    Club findByLicenciaClub (String numLicencia);
+
 }

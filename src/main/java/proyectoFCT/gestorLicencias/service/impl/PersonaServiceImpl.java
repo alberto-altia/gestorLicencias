@@ -3,5 +3,5 @@ package proyectoFCT.gestorLicencias.service.impl;
 import org.springframework.stereotype.Service;
 
 @Service
-public class LicenciaServiceImpl {
+public class PersonaServiceImpl {
 }

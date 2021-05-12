@@ -33,4 +33,8 @@ public class PersonaEspecialidad {
         this.fechaActivacion = fecha;
         this.nivel = nivel;
     }
+
+    public PersonaEspecialidad() {
+
+    }
 }

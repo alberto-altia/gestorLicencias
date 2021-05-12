@@ -9,14 +9,6 @@ import java.util.List;
 @Repository
 public interface PersonaRepository extends CrudRepository<Persona,String> {
 
-//    List<Deportista> findDeportistaByClub (Club club);
-//
-//    List<Entrenador> findEntrenadorByClub (Club club);
 
-//    Deportista findByDeportista (Deportista numLicencia);
-//
-//    Entrenador findByEntrenador (Entrenador numLicencia);
-//
-//    Juez findByJuez (String numLicencia);
 
 }
