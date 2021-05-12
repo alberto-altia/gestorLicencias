@@ -12,12 +12,12 @@ public class PersonaEspecialidad {
     PersonaEspecialidadId id;
 
     @ManyToOne
-    @MapsId("idPersona")
+    @MapsId("persona_id")
     @JoinColumn(name = "persona_id")
     private Persona persona;
 
     @ManyToOne
-    @MapsId("idEspecialidad")
+    @MapsId("especialidad_id")
     @JoinColumn(name = "especialidad_id")
     private Especialidad especialidad;
 
@@ -26,15 +26,4 @@ public class PersonaEspecialidad {
 
     @Column(name = "nivel")
     private String nivel;
-
-    PersonaEspecialidad(Persona persona, Long idEspecialidad,String fecha, String nivel){
-        this.persona = persona;
-        this.especialidad.setIdEspecialidad(idEspecialidad);
-        this.fechaActivacion = fecha;
-        this.nivel = nivel;
-    }
-
-    public PersonaEspecialidad() {
-
-    }
 }

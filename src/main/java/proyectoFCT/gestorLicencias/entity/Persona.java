@@ -1,6 +1,7 @@
 package proyectoFCT.gestorLicencias.entity;
 
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -9,36 +10,30 @@ import java.util.Set;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "Persona")
-@NoArgsConstructor
+@Getter
+@Setter
 public class Persona {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idPersona;
 
-    @Column(name = "DNI", nullable = false)
+    @Column(name = "DNI")
     private String DNI;
 
-    @Column(name = "nombre_apellidos", nullable = false)
+    @Column(name = "nombre_apellidos")
     private String nombreApellidos;
 
-    @Column(name = "fechaNacimiento", nullable = false)
+    @Column(name = "fechaNacimiento")
     private String fechaNacimiento;
 
-    @Column(name = "telefono", nullable = true)
+    @Column(name = "telefono")
     private Integer telefono;
 
-    @Column(name = "email", nullable = true)
+    @Column(name = "email")
     @Email
     private String email;
 
     @OneToMany(cascade = CascadeType.ALL)
     private Set<PersonaEspecialidad> personaEspecialidad;
-
-    public Persona(String dni, String nombre, String fecha, Integer telefono, String email) {
-        this.DNI = dni;
-        this.nombreApellidos = nombre;
-        this.telefono = telefono;
-        this.email = email;
-    }
 }

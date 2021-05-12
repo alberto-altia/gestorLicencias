@@ -1,15 +1,11 @@
 package proyectoFCT.gestorLicencias.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Data
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
 public class Club {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +22,6 @@ public class Club {
     private String fechaCreacion;
 
     @ManyToOne
-    @JoinColumn(name = "idEntrenador",
-            foreignKey = @ForeignKey(name = "Entrenador_Id_FK"))
+    @JoinColumn(name = "idEntrenador")
     private Entrenador entrenador;
 }

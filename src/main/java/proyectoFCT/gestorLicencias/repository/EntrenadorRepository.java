@@ -7,8 +7,8 @@ import proyectoFCT.gestorLicencias.entity.*;
 import java.util.List;
 
 @Repository
-public interface PersonaRepository extends CrudRepository<Persona,String> {
+public interface EntrenadorRepository extends CrudRepository<Entrenador,String> {
 
-
+    Entrenador findEntrenadorByNumLicenciaEntrenador (String numLicenciaEntrenador);
 
 }

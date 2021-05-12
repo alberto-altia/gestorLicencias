@@ -18,15 +18,4 @@ public class Deportista extends Persona {
     @JoinColumn(name = "idClub",
             foreignKey = @ForeignKey(name = "Club_Id_FK"))
     private Club club;
-
-    public Deportista(String numLicenciaDeportista,String numLicenciaClub, String dni, String nombre, String fecha, Integer telefono, String email) {
-        super(dni, nombre, fecha, telefono, email);
-        this.numLicenciaDeportista = numLicenciaDeportista;
-        this.club.setLicenciaClub(numLicenciaClub);
-    }
-
-    public Deportista() {
-        super();
-
-    }
 }

@@ -14,7 +14,7 @@ public class Especialidad {
     @Id
     private Long idEspecialidad;
 
-    @Column(name = "nombreEspecialidad", nullable = false)
+    @Column(name = "nombreEspecialidad")
     private String nombre;
 
     @OneToMany(cascade = CascadeType.DETACH)
