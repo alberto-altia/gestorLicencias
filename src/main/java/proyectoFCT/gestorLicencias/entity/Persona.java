@@ -1,17 +1,17 @@
 package proyectoFCT.gestorLicencias.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import java.util.Set;
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "Persona")
-@Getter
-@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class Persona {
 
     @Id
@@ -31,9 +31,21 @@ public class Persona {
     private Integer telefono;
 
     @Column(name = "email")
-    @Email
     private String email;
+
+    @Column(name= "numLicenciaDeportista")
+    private String numLicenciaDeportista;
+
+    @Column(name = "numLicenciaEntrenador")
+    private String numLicenciaEntrenador;
+
+    @Column(name = "numLicenciaJuez")
+    private String numLicenciaJuez;
 
     @OneToMany(cascade = CascadeType.ALL)
     private Set<PersonaEspecialidad> personaEspecialidad;
+
+    @ManyToOne(cascade = CascadeType.DETACH)
+    @JoinColumn(name = "club")
+    private Club club;
 }

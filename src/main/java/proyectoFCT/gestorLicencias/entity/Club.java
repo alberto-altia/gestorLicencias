@@ -1,6 +1,7 @@
 package proyectoFCT.gestorLicencias.entity;
 
 import lombok.Data;
+import proyectoFCT.gestorLicencias.domain.dto.PersonaDTO;
 
 import javax.persistence.*;
 
@@ -12,16 +13,14 @@ public class Club {
     @Id
     private Long idClub;
 
-    @Column(name = "licenciaClub", nullable = false)
+    @Column(name = "licenciaClub")
     private String licenciaClub;
 
     @Column(name = "nombreClub")
     private String nombreClub;
 
-    @Column(name = "fechaCreacion", nullable = false)
+    @Column(name = "fechaCreacion")
     private String fechaCreacion;
 
-    @ManyToOne
-    @JoinColumn(name = "idEntrenador")
-    private Entrenador entrenador;
+
 }

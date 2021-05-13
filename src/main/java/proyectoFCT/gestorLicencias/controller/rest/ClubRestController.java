@@ -10,6 +10,7 @@ import proyectoFCT.gestorLicencias.domain.dto.ClubDTO;
 import proyectoFCT.gestorLicencias.service.ClubService;
 
 import javax.validation.Valid;
+import java.io.IOException;
 
 @RestController
 public class ClubRestController {
@@ -17,7 +18,7 @@ public class ClubRestController {
     ClubService clubService;
 
     @PostMapping("/nuevoClub")
-    public ResponseEntity<ClubDTO> nueva(@Valid @RequestBody ClubDTO clubDTO) throws JsonProcessingException {
+    public ResponseEntity<ClubDTO> nueva( @RequestBody ClubDTO clubDTO) throws IOException {
         clubService.crearClub(clubDTO);
         return ResponseEntity.ok(clubDTO);
     }

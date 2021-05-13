@@ -7,8 +7,11 @@ import proyectoFCT.gestorLicencias.domain.dto.ClubDTO;
 import proyectoFCT.gestorLicencias.repository.ClubRepository;
 import proyectoFCT.gestorLicencias.service.ClubService;
 
+import java.io.IOException;
+
 @Service
-public class ClubServiceImpl implements ClubService {
+public class
+ClubServiceImpl implements ClubService {
 
     @Autowired
     ClubRepository clubRepository;
@@ -17,7 +20,8 @@ public class ClubServiceImpl implements ClubService {
     ClubControllerHelper clubControllerHelper;
 
     @Override
-    public ClubDTO crearClub(ClubDTO clubDTO) {
+    public ClubDTO crearClub(ClubDTO clubDTO) throws IOException {
+        clubControllerHelper.validadNumLicenciaEntrenador(clubDTO);
         clubRepository.save(clubControllerHelper.convertirClubDTOtoEntity(clubDTO));
         return clubDTO;
     }
