@@ -21,7 +21,8 @@ public class PersonaEspecialidad {
     @MapsId("personaID")
     @JoinColumn(name = "persona_id")
     private Persona persona;
-//as
+
+
     @ManyToOne
     @MapsId("especialidadID")
     @JoinColumn(name = "especialidad_id")
