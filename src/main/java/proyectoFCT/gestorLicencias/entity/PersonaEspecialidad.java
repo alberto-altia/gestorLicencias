@@ -1,14 +1,20 @@
 package proyectoFCT.gestorLicencias.entity;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 public class PersonaEspecialidad {
 
-    @EmbeddedId
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     PersonaEspecialidadId id;
 
     @ManyToOne
