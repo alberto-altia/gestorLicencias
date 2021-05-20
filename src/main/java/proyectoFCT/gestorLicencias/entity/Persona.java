@@ -49,3 +49,7 @@ public class Persona {
     @JoinColumn(name = "club")
     private Club club;
 }
+/*
+INSERT INTO PERSONA  VALUES(1,'49676970Y','albertinho623@gmail.com','20/08/2001','Alberto Martinez','11254A',null,null,625541321,1);
+INSERT INTO PERSONA  VALUES(2,'76339373g','albertinho623@gmail.com','20/08/2001','Rosa Pose',null,'12354J',null,625541321,1);
+ */

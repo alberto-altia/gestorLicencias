@@ -12,13 +12,15 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class PersonaDTO implements Serializable {
 
+    private Long idPersona;
+
     private String dni;
 
     private String nombreApellidos;
 
     private String fechaNacimiento;
 
-    private String telefono;
+    private Integer telefono;
 
     private String email;
 

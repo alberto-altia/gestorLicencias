@@ -12,12 +12,12 @@ public class PersonaEspecialidad {
     PersonaEspecialidadId id;
 
     @ManyToOne
-    @MapsId("persona_id")
+    @MapsId("personaID")
     @JoinColumn(name = "persona_id")
     private Persona persona;
 
     @ManyToOne
-    @MapsId("especialidad_id")
+    @MapsId("especialidadID")
     @JoinColumn(name = "especialidad_id")
     private Especialidad especialidad;
 
@@ -26,4 +26,13 @@ public class PersonaEspecialidad {
 
     @Column(name = "nivel")
     private String nivel;
+
+    private Boolean esDeportista;
+
+    private Boolean esEntrenador;
+
+    private Boolean esJuez;
 }
+/*
+INSERT INTO PERSONA_ESPECIALIDAD  VALUES(1,2,true,false,false,'17/05/2021','A Nacional');
+ */

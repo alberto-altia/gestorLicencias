@@ -1,12 +1,16 @@
 package proyectoFCT.gestorLicencias.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import proyectoFCT.gestorLicencias.domain.dto.PersonaDTO;
 
 import javax.persistence.*;
 
 @Data
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class Club {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
