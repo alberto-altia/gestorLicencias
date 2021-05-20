@@ -9,7 +9,7 @@ import java.util.Set;
 
 @Data
 @Entity
-@Table(name = "Especialidad")
+//@Table(name = "Especialidad")
 @AllArgsConstructor
 @NoArgsConstructor
 public class Especialidad {
@@ -21,7 +21,7 @@ public class Especialidad {
     @Column(name = "nombreEspecialidad")
     private String nombre;
 
-    @OneToMany(cascade = CascadeType.DETACH)
+    @OneToMany(mappedBy = "especialidad", fetch = FetchType.LAZY)
     private Set<PersonaEspecialidad> personaEspecialidad;
 
     public Especialidad(Long idEspecialidad, String nombre) {

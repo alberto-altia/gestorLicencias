@@ -19,7 +19,6 @@ public class ClubRestController {
 
     @PostMapping("/nuevoClub")
     public ResponseEntity<ClubDTO> nueva( @RequestBody ClubDTO clubDTO) throws IOException {
-        clubService.crearClub(clubDTO);
-        return ResponseEntity.ok(clubDTO);
+        return ResponseEntity.ok(clubService.crearOuModificarClub(clubDTO));
     }
 }

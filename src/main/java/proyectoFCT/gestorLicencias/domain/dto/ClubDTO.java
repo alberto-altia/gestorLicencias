@@ -14,7 +14,7 @@ public class ClubDTO implements Serializable {
 
     private Long idClub;
 
-    private String numLicenciaClub;
+    private String licenciaClub;
 
     private String nombreClub;
 

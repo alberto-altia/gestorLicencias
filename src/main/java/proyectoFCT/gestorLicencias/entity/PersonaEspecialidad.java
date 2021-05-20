@@ -1,6 +1,5 @@
 package proyectoFCT.gestorLicencias.entity;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,18 +14,15 @@ public class PersonaEspecialidad {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    PersonaEspecialidadId id;
+    private Long id;
 
-    @ManyToOne
-    @MapsId("personaID")
-    @JoinColumn(name = "persona_id")
-    private Persona persona;
-
-
-    @ManyToOne
-    @MapsId("especialidadID")
-    @JoinColumn(name = "especialidad_id")
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "codEspecialidad", referencedColumnName="idEspecialidad")
     private Especialidad especialidad;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "codPersona", referencedColumnName="idPersona")
+    private Persona persona;
 
     @Column(name = "fechaActivacion")
     private String fechaActivacion;

@@ -30,5 +30,5 @@ public class PersonaDTO implements Serializable {
 
     private String numLicenciaJuez;
 
-    private Club club;
+    private Long codClub;
 }

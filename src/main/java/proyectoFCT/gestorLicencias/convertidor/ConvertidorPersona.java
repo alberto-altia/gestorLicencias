@@ -1,6 +1,8 @@
 package proyectoFCT.gestorLicencias.convertidor;
 
 import org.springframework.stereotype.Component;
+
+import proyectoFCT.gestorLicencias.domain.dto.PersonaDTO;
 import proyectoFCT.gestorLicencias.domain.dto.PersonaEspecialidadDTO;
 import proyectoFCT.gestorLicencias.entity.Club;
 import proyectoFCT.gestorLicencias.entity.Especialidad;
@@ -12,9 +14,6 @@ public class ConvertidorPersona {
 
     public PersonaEspecialidad convertirPersonaEspecialidadDTOtoEntity(PersonaEspecialidadDTO personaEspecialidadDTO)  {
         PersonaEspecialidad personaEspecialidad = new PersonaEspecialidad();
-
-        personaEspecialidad.setPersona(convertirPersonaEspecialidadEnPersona(personaEspecialidadDTO));
-        personaEspecialidad.setEspecialidad(convertirPersonaEspecialidadEnEspecialidad(personaEspecialidadDTO));
         personaEspecialidad.setEsDeportista(personaEspecialidadDTO.getEsDeportista());
         personaEspecialidad.setEsEntrenador(personaEspecialidadDTO.getEsEntrenador());
         personaEspecialidad.setEsJuez(personaEspecialidadDTO.getEsJuez());
@@ -23,23 +22,38 @@ public class ConvertidorPersona {
 
         return personaEspecialidad;
     }
-    public Persona convertirPersonaEspecialidadEnPersona(PersonaEspecialidadDTO personaEspecialidadDTO){
+    
+    public PersonaDTO toDto(Persona entity) {
+    	PersonaDTO dto = new PersonaDTO();
+    	dto.setIdPersona(entity.getIdPersona());
+    	dto.setNombreApellidos(entity.getNombreApellidos());
+    	dto.setFechaNacimiento(entity.getFechaNacimiento());
+    	dto.setTelefono(entity.getTelefono());
+    	dto.setEmail(entity.getEmail());
+    	dto.setNumLicenciaDeportista(entity.getNumLicenciaDeportista());
+    	dto.setNumLicenciaEntrenador(entity.getNumLicenciaEntrenador());
+    	dto.setNumLicenciaJuez(entity.getNumLicenciaJuez());
+    	dto.setCodClub(entity.getClub().getIdClub());
+    	return dto;
+    }
+    
+    public Persona getPersonaFromDto(PersonaDTO dto){
         Persona persona = new Persona();
 
-        persona.setIdPersona(personaEspecialidadDTO.getPersona().getIdPersona());
-        persona.setNombreApellidos(personaEspecialidadDTO.getPersona().getNombreApellidos());
-        persona.setFechaNacimiento(personaEspecialidadDTO.getPersona().getFechaNacimiento());
-        persona.setTelefono(personaEspecialidadDTO.getPersona().getTelefono());
-        persona.setEmail(personaEspecialidadDTO.getPersona().getEmail());
-        persona.setNumLicenciaDeportista(personaEspecialidadDTO.getPersona().getNumLicenciaDeportista());
-        persona.setNumLicenciaEntrenador(personaEspecialidadDTO.getPersona().getNumLicenciaEntrenador());
-        persona.setNumLicenciaJuez(personaEspecialidadDTO.getPersona().getNumLicenciaJuez());
-        persona.setPersonaEspecialidad(null);
-        persona.setClub(new Club(personaEspecialidadDTO.getPersona().getClub().getIdClub(),
-                                personaEspecialidadDTO.getPersona().getClub().getLicenciaClub(),
-                                personaEspecialidadDTO.getPersona().getClub().getNombreClub(),
-                                personaEspecialidadDTO.getPersona().getClub().getFechaCreacion()));
-        persona.setDNI(personaEspecialidadDTO.getPersona().getDni());
+        persona.setIdPersona(dto.getIdPersona());
+        persona.setNombreApellidos(dto.getNombreApellidos());
+        persona.setFechaNacimiento(dto.getFechaNacimiento());
+        persona.setTelefono(dto.getTelefono());
+        persona.setEmail(dto.getEmail());
+        persona.setNumLicenciaDeportista(dto.getNumLicenciaDeportista());
+        persona.setNumLicenciaEntrenador(dto.getNumLicenciaEntrenador());
+        persona.setNumLicenciaJuez(dto.getNumLicenciaJuez());
+        //persona.setPersonaEspecialidad(null);
+//        persona.setClub(new Club(personaEspecialidadDTO.getClub().getIdClub(),
+//                                personaEspecialidadDTO.getClub().getLicenciaClub(),
+//                                personaEspecialidadDTO.getClub().getNombreClub(),
+//                                personaEspecialidadDTO.getClub().getFechaCreacion()));
+        persona.setDNI(dto.getDni());
         return persona;
     }
 

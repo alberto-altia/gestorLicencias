@@ -2,18 +2,23 @@ package proyectoFCT.gestorLicencias.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import proyectoFCT.gestorLicencias.domain.dto.PersonaDTO;
+import lombok.Setter;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.*;
 
-@Data
+@Getter
+@Setter
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 public class Club {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     private Long idClub;
 
@@ -25,6 +30,18 @@ public class Club {
 
     @Column(name = "fechaCreacion")
     private String fechaCreacion;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="club", orphanRemoval=true)
+    private Set<Persona> personas;
+    
+    public void setPersonas(Set<Persona> newPersonas) {
+    	if(newPersonas == null)
+    		return;
+    	if(personas == null)
+    		personas = new HashSet<Persona>();
+    	personas.clear();
+    	personas.addAll(newPersonas);
+    }
 
 
 }

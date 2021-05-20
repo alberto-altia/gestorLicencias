@@ -6,5 +6,5 @@ import java.io.IOException;
 
 public interface ClubService {
 
-    ClubDTO crearClub (ClubDTO clubDTO) throws IOException;
+    ClubDTO crearOuModificarClub (ClubDTO clubDTO) throws IOException;
 }

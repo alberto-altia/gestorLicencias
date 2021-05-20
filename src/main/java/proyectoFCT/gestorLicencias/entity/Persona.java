@@ -42,11 +42,11 @@ public class Persona {
     @Column(name = "numLicenciaJuez")
     private String numLicenciaJuez;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "persona", fetch = FetchType.LAZY)
     private Set<PersonaEspecialidad> personaEspecialidad;
 
-    @ManyToOne(cascade = CascadeType.DETACH)
-    @JoinColumn(name = "club")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "codClub")
     private Club club;
 }
 /*

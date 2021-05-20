@@ -16,10 +16,19 @@ public class ConvertidorClub {
     public Club convertirClubDTOtoEntity(ClubDTO clubDTO) {
         Club club = new Club();
         club.setNombreClub(clubDTO.getNombreClub());
-        club.setLicenciaClub(clubDTO.getNumLicenciaClub());
+        club.setLicenciaClub(clubDTO.getLicenciaClub());
         club.setFechaCreacion(clubDTO.getFechaCreacion());
 
         return club;
+    }
+    
+    public ClubDTO toDto(Club club) {
+    	ClubDTO dto = new ClubDTO();
+    	dto.setIdClub(club.getIdClub());
+    	dto.setNombreClub(club.getNombreClub());
+    	dto.setLicenciaClub(club.getLicenciaClub());
+    	dto.setFechaCreacion(club.getFechaCreacion());
+    	return dto;
     }
 
     public void validadNumLicenciaEntrenador(ClubDTO clubDTO) {
