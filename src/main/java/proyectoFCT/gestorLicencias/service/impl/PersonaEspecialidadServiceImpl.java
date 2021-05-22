@@ -38,7 +38,7 @@ public class PersonaEspecialidadServiceImpl implements PersonaEspecialidadServic
     @Override
     @Transactional
     public PersonaEspecialidadDTO crearPersona(PersonaEspecialidadDTO personaEspecialidadDTO) {
-    	if(!especialidadRepository.existsById(personaEspecialidadDTO.getEspecialidad().getIdEspecialidad()))
+    	if(!especialidadRepository.existsById(personaEspecialidadDTO.getCodEspecialidad()))
     		throw new EntityNotFoundException();
     	PersonaEspecialidad pEsp = new PersonaEspecialidad();
     	BeanUtils.copyProperties(personaEspecialidadDTO, pEsp);
@@ -47,9 +47,6 @@ public class PersonaEspecialidadServiceImpl implements PersonaEspecialidadServic
     	System.out.println(idPersona);
     	
     	pEsp.setPersona(entityManager.getReference(Persona.class, idPersona));
-    	
-    	
-    	//Persona persona = new Persona();    	
     	
         personaEspecialidadRepository.save(pEsp);
         return personaEspecialidadDTO;

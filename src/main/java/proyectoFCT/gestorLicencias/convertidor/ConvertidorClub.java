@@ -6,22 +6,12 @@ import proyectoFCT.gestorLicencias.domain.dto.ClubDTO;
 import proyectoFCT.gestorLicencias.entity.Club;
 import proyectoFCT.gestorLicencias.repository.PersonaRepository;
 
-import java.io.IOException;
-
 @Component
 public class ConvertidorClub {
+
     @Autowired
     PersonaRepository personaRepository;
 
-    public Club convertirClubDTOtoEntity(ClubDTO clubDTO) {
-        Club club = new Club();
-        club.setNombreClub(clubDTO.getNombreClub());
-        club.setLicenciaClub(clubDTO.getLicenciaClub());
-        club.setFechaCreacion(clubDTO.getFechaCreacion());
-
-        return club;
-    }
-    
     public ClubDTO toDto(Club club) {
     	ClubDTO dto = new ClubDTO();
     	dto.setIdClub(club.getIdClub());

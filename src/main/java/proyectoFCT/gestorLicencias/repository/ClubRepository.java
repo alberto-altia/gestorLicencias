@@ -7,4 +7,6 @@ import proyectoFCT.gestorLicencias.entity.Club;
 
 @Repository
 public interface ClubRepository extends JpaRepository<Club,Long> {
+
+    Club findClubByLicenciaClub (String licenciaClub);
 }

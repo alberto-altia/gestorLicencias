@@ -35,11 +35,11 @@ public class Club {
     private Set<Persona> personas;
     
     public void setPersonas(Set<Persona> newPersonas) {
-    	if(newPersonas == null)
-    		return;
     	if(personas == null)
     		personas = new HashSet<Persona>();
     	personas.clear();
+        if(newPersonas == null)
+            return;
     	personas.addAll(newPersonas);
     }
 
