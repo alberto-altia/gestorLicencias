@@ -39,5 +39,5 @@ public class PersonaRestController {
     public ResponseEntity<PersonaDTO> nueva(@RequestBody LoginDTO loginDTO) {
         return ResponseEntity.ok(personaService.login(loginDTO));
     }
-
+//asdf
 }
