@@ -33,7 +33,7 @@ public class Persona {
     @Column(name = "email")
     private String email;
 
-    @Column(name= "numLicenciaDeportista")
+    @Column(name = "numLicenciaDeportista")
     private String numLicenciaDeportista;
 
     @Column(name = "numLicenciaEntrenador")
@@ -41,6 +41,12 @@ public class Persona {
 
     @Column(name = "numLicenciaJuez")
     private String numLicenciaJuez;
+
+    @Column(name = "usuario")
+    private String usuario;
+
+    @Column(name = "password")
+    private String password;
 
     @OneToMany(mappedBy = "persona", fetch = FetchType.LAZY)
     private Set<PersonaEspecialidad> personaEspecialidad;

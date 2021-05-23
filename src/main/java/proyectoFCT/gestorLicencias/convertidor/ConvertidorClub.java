@@ -13,12 +13,12 @@ public class ConvertidorClub {
     PersonaRepository personaRepository;
 
     public ClubDTO toDto(Club club) {
-    	ClubDTO dto = new ClubDTO();
-    	dto.setIdClub(club.getIdClub());
-    	dto.setNombreClub(club.getNombreClub());
-    	dto.setLicenciaClub(club.getLicenciaClub());
-    	dto.setFechaCreacion(club.getFechaCreacion());
-    	return dto;
+        ClubDTO dto = new ClubDTO();
+        dto.setIdClub(club.getIdClub());
+        dto.setNombreClub(club.getNombreClub());
+        dto.setLicenciaClub(club.getLicenciaClub());
+        dto.setFechaCreacion(club.getFechaCreacion());
+        return dto;
     }
 
     public void validadNumLicenciaEntrenador(ClubDTO clubDTO) {

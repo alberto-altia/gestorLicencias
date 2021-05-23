@@ -1,15 +1,13 @@
 package proyectoFCT.gestorLicencias.entity;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
-
-import javax.persistence.*;
 
 @Getter
 @Setter
@@ -30,17 +28,17 @@ public class Club {
 
     @Column(name = "fechaCreacion")
     private String fechaCreacion;
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="club", orphanRemoval=true)
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "club", orphanRemoval = true)
     private Set<Persona> personas;
-    
+
     public void setPersonas(Set<Persona> newPersonas) {
-    	if(personas == null)
-    		personas = new HashSet<Persona>();
-    	personas.clear();
-        if(newPersonas == null)
+        if (personas == null)
+            personas = new HashSet<Persona>();
+        personas.clear();
+        if (newPersonas == null)
             return;
-    	personas.addAll(newPersonas);
+        personas.addAll(newPersonas);
     }
 
 

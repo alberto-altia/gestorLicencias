@@ -27,7 +27,7 @@ public class Especialidad {
     public Especialidad(Long idEspecialidad, String nombre) {
         this.idEspecialidad = idEspecialidad;
         this.nombre = nombre;
-        personaEspecialidad= null;
+        personaEspecialidad = null;
     }
 }
 /*

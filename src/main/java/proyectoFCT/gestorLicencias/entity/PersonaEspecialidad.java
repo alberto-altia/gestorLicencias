@@ -16,12 +16,12 @@ public class PersonaEspecialidad {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "codEspecialidad", referencedColumnName="idEspecialidad")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "codEspecialidad", referencedColumnName = "idEspecialidad")
     private Especialidad especialidad;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "codPersona", referencedColumnName="idPersona")
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "codPersona", referencedColumnName = "idPersona")
     private Persona persona;
 
     @Column(name = "fechaActivacion")

@@ -23,5 +23,5 @@ public class PersonaEspecialidadDTO implements Serializable {
 
     private Boolean esEntrenador;
 
-    private Boolean  esJuez;
+    private Boolean esJuez;
 }

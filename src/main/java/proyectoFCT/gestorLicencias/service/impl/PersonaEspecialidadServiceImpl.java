@@ -20,15 +20,15 @@ import java.util.List;
 @Service
 public class PersonaEspecialidadServiceImpl implements PersonaEspecialidadService {
 
-	@Autowired
-	IEspecialidadRepository especialidadRepository;
-	
-	@Autowired
-	EntityManager entityManager;
-	
+    @Autowired
+    IEspecialidadRepository especialidadRepository;
+
+    @Autowired
+    EntityManager entityManager;
+
     @Autowired
     ConvertidorPersona convertidorPersona;
-    
+
     @Autowired
     IPersonaService personaService;
 
@@ -38,16 +38,16 @@ public class PersonaEspecialidadServiceImpl implements PersonaEspecialidadServic
     @Override
     @Transactional
     public PersonaEspecialidadDTO crearPersona(PersonaEspecialidadDTO personaEspecialidadDTO) {
-    	if(!especialidadRepository.existsById(personaEspecialidadDTO.getCodEspecialidad()))
-    		throw new EntityNotFoundException();
-    	PersonaEspecialidad pEsp = new PersonaEspecialidad();
-    	BeanUtils.copyProperties(personaEspecialidadDTO, pEsp);
-    	
-    	Long idPersona = personaService.createOrUpdate(personaEspecialidadDTO.getPersona()).getIdPersona();
-    	System.out.println(idPersona);
-    	
-    	pEsp.setPersona(entityManager.getReference(Persona.class, idPersona));
-    	
+        if (!especialidadRepository.existsById(personaEspecialidadDTO.getCodEspecialidad()))
+            throw new EntityNotFoundException();
+        PersonaEspecialidad pEsp = new PersonaEspecialidad();
+        BeanUtils.copyProperties(personaEspecialidadDTO, pEsp);
+
+        Long idPersona = personaService.createOrUpdate(personaEspecialidadDTO.getPersona()).getIdPersona();
+        System.out.println(idPersona);
+
+        pEsp.setPersona(entityManager.getReference(Persona.class, idPersona));
+
         personaEspecialidadRepository.save(pEsp);
         return personaEspecialidadDTO;
     }

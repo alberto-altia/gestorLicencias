@@ -11,6 +11,7 @@ public class ConvertidorPersona {
         PersonaDTO dto = new PersonaDTO();
         dto.setIdPersona(entity.getIdPersona());
         dto.setNombreApellidos(entity.getNombreApellidos());
+        dto.setDni(entity.getDNI());
         dto.setFechaNacimiento(entity.getFechaNacimiento());
         dto.setTelefono(entity.getTelefono());
         dto.setEmail(entity.getEmail());
@@ -18,7 +19,10 @@ public class ConvertidorPersona {
         dto.setNumLicenciaEntrenador(entity.getNumLicenciaEntrenador());
         dto.setNumLicenciaJuez(entity.getNumLicenciaJuez());
         dto.setCodClub(entity.getClub().getIdClub());
+        dto.setUsuario(entity.getUsuario());
+        dto.setPassword(entity.getPassword());
         return dto;
     }
+
 }
 // personaEspecialidadDTO.getEspecialidadDTO().getIdEspecialidad(),personaEspecialidadDTO.getEspecialidadDTO().getNombre()
