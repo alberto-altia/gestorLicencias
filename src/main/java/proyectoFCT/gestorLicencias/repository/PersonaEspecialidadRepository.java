@@ -1,7 +1,9 @@
 package proyectoFCT.gestorLicencias.repository;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import proyectoFCT.gestorLicencias.entity.PersonaEspecialidad;
-import org.springframework.data.repository.CrudRepository;
 
-public interface PersonaEspecialidadRepository extends CrudRepository<PersonaEspecialidad,Long> {
+public interface PersonaEspecialidadRepository extends JpaRepository<PersonaEspecialidad,Long> {
+
+    PersonaEspecialidad existsPersonaEspecialidadById(Long id);
 }

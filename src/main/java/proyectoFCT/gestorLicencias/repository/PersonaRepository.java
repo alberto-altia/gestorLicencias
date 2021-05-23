@@ -13,5 +13,7 @@ public interface PersonaRepository extends CrudRepository<Persona,Long> {
 
     Boolean existsPersonaByUsuario (String usuario);
 
+    Boolean existsPersonaByUsuarioAndPassword (String usuario, String password);
+
     Persona findPersonaByUsuarioAndPassword (String usuario,String password);
 }
