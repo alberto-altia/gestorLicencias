@@ -1,26 +1,20 @@
 package proyectoFCT.gestorLicencias.controller.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 import proyectoFCT.gestorLicencias.controller.exceptions.BadRequestException;
 import proyectoFCT.gestorLicencias.domain.dto.LoginDTO;
 import proyectoFCT.gestorLicencias.domain.dto.PersonaDTO;
 import proyectoFCT.gestorLicencias.domain.dto.PersonaEspecialidadDTO;
 import proyectoFCT.gestorLicencias.domain.dto.PersonaEspecialidadFindAllDto;
-import proyectoFCT.gestorLicencias.entity.PersonaEspecialidad;
 import proyectoFCT.gestorLicencias.service.PersonaEspecialidadService;
 import proyectoFCT.gestorLicencias.service.impl.PersonaServiceImpl;
 
+import javax.persistence.EntityNotFoundException;
 import java.io.IOException;
 import java.util.List;
-
-import javax.persistence.EntityNotFoundException;
 
 @Controller
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -42,6 +36,34 @@ public class PersonaRestController {
     public ResponseEntity<List<PersonaEspecialidadFindAllDto>> obtenerPersonas() {
         return ResponseEntity.ok(personaEspecialidadService.findAll());
     }
+
+    @GetMapping("/personas/{id}")
+    public ResponseEntity<PersonaDTO> obtenerPersonasById(@PathVariable String id) {
+        try{
+            return ResponseEntity.ok(personaService.findPersonaById(id));
+        }catch(EntityNotFoundException e) {
+            throw new BadRequestException("id incorrecto");
+        }
+    }
+    @PostMapping("/editarPersona")
+    public ResponseEntity<PersonaDTO> editarPersona(@RequestBody PersonaDTO personaDTO){
+        try{
+            return ResponseEntity.ok(personaService.createOrUpdate(personaDTO));
+        }catch(EntityNotFoundException e) {
+            throw new BadRequestException("id incorrecto");
+        }
+    }
+
+    @DeleteMapping("/eliminarPersona/{id}")
+    public ResponseEntity<?> eliminarPersona(@PathVariable String id){
+        try {
+           return ResponseEntity.ok(personaService.delete(id));
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            throw new BadRequestException("Error al eliminar elemento");
+        }
+    }
+
     @PostMapping("/login")
     public ResponseEntity<?> nueva(@RequestBody LoginDTO loginDTO) {
         try{
@@ -50,5 +72,6 @@ public class PersonaRestController {
         	throw new BadRequestException("error endpoint");
         }
     }
+
 //asdf
 }

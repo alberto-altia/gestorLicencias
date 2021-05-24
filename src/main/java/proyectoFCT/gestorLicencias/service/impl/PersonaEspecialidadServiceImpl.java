@@ -17,7 +17,6 @@ import proyectoFCT.gestorLicencias.service.IPersonaService;
 import proyectoFCT.gestorLicencias.service.PersonaEspecialidadService;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;

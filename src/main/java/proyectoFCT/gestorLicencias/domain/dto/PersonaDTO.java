@@ -13,7 +13,7 @@ public class PersonaDTO implements Serializable {
 
     private Long idPersona;
 
-    private String dni;
+    private String DNI;
 
     private String nombreApellidos;
 
