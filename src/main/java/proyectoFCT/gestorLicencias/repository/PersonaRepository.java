@@ -22,4 +22,10 @@ public interface PersonaRepository extends CrudRepository<Persona,Long> {
     Persona findPersonaByUsuario (String usuario);
 
     Boolean existsPersonaByIdPersona(Long id);
+
+    Boolean existsPersonaByNumLicenciaDeportista (String licenciaDeportista);
+
+    Boolean existsPersonaByNumLicenciaEntrenador (String lincenciaEntrenador);
+
+    Boolean existsPersonaByNumLicenciaJuez (String licenciaJuez);
 }

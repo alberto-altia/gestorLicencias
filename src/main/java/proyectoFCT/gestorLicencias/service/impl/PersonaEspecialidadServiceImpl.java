@@ -55,7 +55,7 @@ public class PersonaEspecialidadServiceImpl implements PersonaEspecialidadServic
         PersonaEspecialidad pEsp = new PersonaEspecialidad();
         BeanUtils.copyProperties(personaEspecialidadDTO, pEsp);
 
-        pEsp.setPersona(entityManager.getReference(Persona.class, personaService.createOrUpdate(personaEspecialidadDTO.getPersona()).getIdPersona()));
+        pEsp.setPersona(entityManager.getReference(Persona.class, personaService.createOrUpdate(personaEspecialidadDTO.getPersona(),pEsp.getEsEntrenador(),pEsp.getEsDeportista(),pEsp.getEsJuez()).getIdPersona()));
         pEsp.setEspecialidad(entityManager.getReference(Especialidad.class, personaEspecialidadDTO.getCodEspecialidad()));
         personaEspecialidadRepository.save(pEsp);
         return personaEspecialidadDTO;

@@ -12,9 +12,9 @@ import proyectoFCT.gestorLicencias.entity.Persona;
 import proyectoFCT.gestorLicencias.repository.PersonaEspecialidadRepository;
 import proyectoFCT.gestorLicencias.repository.PersonaRepository;
 import proyectoFCT.gestorLicencias.service.IPersonaService;
+import proyectoFCT.gestorLicencias.utils.GenerarLicencias;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 
 @Service
@@ -31,14 +31,33 @@ public class PersonaServiceImpl implements IPersonaService {
     @Autowired
     EntityManager entityManager;
 
+    @Autowired
+    GenerarLicencias generarLicencias;
+
     @Override
-    public PersonaDTO createOrUpdate(PersonaDTO input) {
+    public PersonaDTO createOrUpdate(PersonaDTO input, Boolean esEntrenador, Boolean esDeportista, Boolean esJuez) {
        if(!input.getUsuario().equals(personaRepository.findPersonaByIdPersona(input.getIdPersona()).getUsuario())){
             if(personaRepository.existsPersonaByUsuario(input.getUsuario()))
                 throw new BadRequestException("Ese nombre de usuario ya existe");
        }
         Persona persona = input.getIdPersona() != null ? personaRepository.findById(input.getIdPersona()).get() : new Persona();
-        BeanUtils.copyProperties(input, persona, "codClub");
+        BeanUtils.copyProperties(input, persona, "codClub","numLicenciaDeportista","numLicenciaEntrenador","numLicenciaJuez");
+        persona.setClub(entityManager.getReference(Club.class, input.getCodClub()));
+        if(esDeportista) persona.setNumLicenciaDeportista(generarLicencias.generarCodigo());
+        if(esEntrenador) persona.setNumLicenciaEntrenador(generarLicencias.generarCodigo());
+        if (esJuez) persona.setNumLicenciaJuez(generarLicencias.generarCodigo());
+
+        return convertidorPersona.toDto(personaRepository.save(persona));
+    }
+
+    @Override
+    public PersonaDTO Update(PersonaDTO input) {
+        if(!input.getUsuario().equals(personaRepository.findPersonaByIdPersona(input.getIdPersona()).getUsuario())){
+            if(personaRepository.existsPersonaByUsuario(input.getUsuario()))
+                throw new BadRequestException("Ese nombre de usuario ya existe");
+        }
+        Persona persona = input.getIdPersona() != null ? personaRepository.findById(input.getIdPersona()).get() : new Persona();
+        BeanUtils.copyProperties(input, persona, "codClub","numLicenciaDeportista","numLicenciaEntrenador","numLicenciaJuez");
         persona.setClub(entityManager.getReference(Club.class, input.getCodClub()));
 
         return convertidorPersona.toDto(personaRepository.save(persona));
@@ -51,7 +70,6 @@ public class PersonaServiceImpl implements IPersonaService {
         }
         if (!personaRepository.existsPersonaByUsuarioAndPassword(loginDTO.getUsuario(),loginDTO.getPassword())){
             throw new BadRequestException("Contraseña incorrecta");
-
         }
         return convertidorPersona.toDto(personaRepository.findPersonaByUsuarioAndPassword(loginDTO.getUsuario(), loginDTO.getPassword()));
     }
@@ -71,5 +89,7 @@ public class PersonaServiceImpl implements IPersonaService {
         personaRepository.deleteById(id);
         return id;
     }
+
+
 
 }

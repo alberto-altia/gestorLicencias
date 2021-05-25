@@ -48,7 +48,7 @@ public class PersonaRestController {
     @PostMapping("/editarPersona")
     public ResponseEntity<PersonaDTO> editarPersona(@RequestBody PersonaDTO personaDTO){
         try{
-            return ResponseEntity.ok(personaService.createOrUpdate(personaDTO));
+            return ResponseEntity.ok(personaService.Update(personaDTO));
         }catch(EntityNotFoundException e) {
             throw new BadRequestException("id incorrecto");
         }
