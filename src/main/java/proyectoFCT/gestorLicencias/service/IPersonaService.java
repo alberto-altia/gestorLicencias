@@ -5,7 +5,7 @@ import proyectoFCT.gestorLicencias.domain.dto.PersonaDTO;
 
 public interface IPersonaService {
 
-	PersonaDTO createOrUpdate(PersonaDTO input, Boolean esEntrenador, Boolean esDeportista, Boolean entrenador);
+	PersonaDTO create(PersonaDTO input, Boolean esEntrenador, Boolean esDeportista, Boolean esJuez);
 
 	PersonaDTO login (LoginDTO loginDTO);
 

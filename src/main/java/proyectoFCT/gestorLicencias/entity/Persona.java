@@ -58,4 +58,26 @@ public class Persona {
 /*
 INSERT INTO PERSONA VALUES(1,'49676970Y','albertinho623@gmail.com','20/08/2001','Alberto Martinez','11254A',null,null,'1234',625541321,'alberto',1);
 INSERT INTO PERSONA VALUES(2,'49676970Y','albertinho623@gmail.com','20/08/2001','Alberto Martinez','11254A',null,null,'1234',625541321,'alberto5',1);
+
+{
+    "codEspecialidad":5,
+    "persona": {
+        "nombreApellidos": "Alberto Martinez",
+        "fechaNacimiento": "20/08/2001",
+        "telefono": 625541321,
+        "email": "albertinho@gmail.com",
+        "numLicenciaDeportista": null,
+        "numLicenciaEntrenador": "12354J",
+        "numLicenciaJuez": null,
+        "codClub":3 ,
+        "dni": "76339373g",
+        "usuario":"alberto7",
+        "password":"1234"
+    },
+    "nivel":"medio",
+    "esDeportista":"true",
+    "esEntrenador":"false",
+    "esJuez":"false",
+    "fechaActivacion":"17/05/2021"
+}
  */

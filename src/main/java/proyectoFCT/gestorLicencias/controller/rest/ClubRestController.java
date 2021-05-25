@@ -21,19 +21,18 @@ public class ClubRestController {
         return ResponseEntity.ok(clubService.crearOuModificarClub(clubDTO));
     }
 
-    @GetMapping("/clubs/{id}")
-    public ResponseEntity<?> findClubByPersona(@PathVariable String id){
-        try{
-            return ResponseEntity.ok(clubService.findClubByPersona(id));
-        }catch(EntityNotFoundException e) {
-            throw new BadRequestException("id incorrecto");
-        }
-    }
-
     @GetMapping("/clubs")
     public ResponseEntity<?> allClubs(){
         try{
             return ResponseEntity.ok(clubService.findAll());
+        }catch(EntityNotFoundException e) {
+            throw new BadRequestException("id incorrecto");
+        }
+    }
+    @GetMapping("/clubs/{id}")
+    public ResponseEntity<?> findClubByIdPersona(@PathVariable Long id){
+        try{
+            return ResponseEntity.ok(clubService.findClubByPersonaId(id));
         }catch(EntityNotFoundException e) {
             throw new BadRequestException("id incorrecto");
         }

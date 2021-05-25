@@ -26,17 +26,6 @@ public class PersonaRestController {
     @Autowired
     PersonaServiceImpl personaService;
 
-    @PostMapping("/nuevaPersona")
-    public ResponseEntity<PersonaEspecialidadDTO> nueva(@RequestBody PersonaEspecialidadDTO personaEspecialidadDTO) throws IOException {
-        personaEspecialidadService.crearPersona(personaEspecialidadDTO);
-        return ResponseEntity.ok(personaEspecialidadDTO);
-    }
-
-    @GetMapping("/personas")
-    public ResponseEntity<List<PersonaEspecialidadFindAllDto>> obtenerPersonas() {
-        return ResponseEntity.ok(personaEspecialidadService.findAll());
-    }
-
     @GetMapping("/personas/{id}")
     public ResponseEntity<PersonaDTO> obtenerPersonasById(@PathVariable String id) {
         try{

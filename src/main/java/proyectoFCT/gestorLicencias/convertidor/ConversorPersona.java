@@ -5,7 +5,7 @@ import proyectoFCT.gestorLicencias.domain.dto.PersonaDTO;
 import proyectoFCT.gestorLicencias.entity.Persona;
 
 @Component
-public class ConvertidorPersona {
+public class ConversorPersona {
 
     public PersonaDTO toDto(Persona entity) {
         PersonaDTO dto = new PersonaDTO();
@@ -27,4 +27,4 @@ public class ConvertidorPersona {
     }
 
 }
-// personaEspecialidadDTO.getEspecialidadDTO().getIdEspecialidad(),personaEspecialidadDTO.getEspecialidadDTO().getNombre()
+// personaEspecialidadDTO.getEspecialidadDTO().getIdEspecialidad(),personaEspecialidadDTO.getEspecialidadDTO().getNombreEspecialidad()

@@ -9,7 +9,7 @@ import java.util.Set;
 
 @Data
 @Entity
-//@Table(name = "Especialidad")
+@Table(name = "Especialidad")
 @AllArgsConstructor
 @NoArgsConstructor
 public class Especialidad {
@@ -19,14 +19,14 @@ public class Especialidad {
     private Long idEspecialidad;
 
     @Column(name = "nombreEspecialidad")
-    private String nombre;
+    private String nombreEspecialidad;
 
     @OneToMany(mappedBy = "especialidad", fetch = FetchType.LAZY)
     private Set<PersonaEspecialidad> personaEspecialidad;
 
-    public Especialidad(Long idEspecialidad, String nombre) {
+    public Especialidad(Long idEspecialidad, String nombreEspecialidad) {
         this.idEspecialidad = idEspecialidad;
-        this.nombre = nombre;
+        this.nombreEspecialidad = nombreEspecialidad;
         personaEspecialidad = null;
     }
 }

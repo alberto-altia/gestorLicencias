@@ -4,11 +4,12 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import proyectoFCT.gestorLicencias.controller.exceptions.BadRequestException;
-import proyectoFCT.gestorLicencias.convertidor.ConvertidorPersona;
+import proyectoFCT.gestorLicencias.convertidor.ConversorPersona;
 import proyectoFCT.gestorLicencias.domain.dto.LoginDTO;
 import proyectoFCT.gestorLicencias.domain.dto.PersonaDTO;
 import proyectoFCT.gestorLicencias.entity.Club;
 import proyectoFCT.gestorLicencias.entity.Persona;
+import proyectoFCT.gestorLicencias.repository.ClubRepository;
 import proyectoFCT.gestorLicencias.repository.PersonaEspecialidadRepository;
 import proyectoFCT.gestorLicencias.repository.PersonaRepository;
 import proyectoFCT.gestorLicencias.service.IPersonaService;
@@ -26,7 +27,10 @@ public class PersonaServiceImpl implements IPersonaService {
     PersonaEspecialidadRepository personaEspecialidadRepository;
 
     @Autowired
-    ConvertidorPersona convertidorPersona;
+    ClubRepository clubRepository;
+
+    @Autowired
+    ConversorPersona conversorPersona;
 
     @Autowired
     EntityManager entityManager;
@@ -35,19 +39,15 @@ public class PersonaServiceImpl implements IPersonaService {
     GenerarLicencias generarLicencias;
 
     @Override
-    public PersonaDTO createOrUpdate(PersonaDTO input, Boolean esEntrenador, Boolean esDeportista, Boolean esJuez) {
-       if(!input.getUsuario().equals(personaRepository.findPersonaByIdPersona(input.getIdPersona()).getUsuario())){
-            if(personaRepository.existsPersonaByUsuario(input.getUsuario()))
-                throw new BadRequestException("Ese nombre de usuario ya existe");
-       }
-        Persona persona = input.getIdPersona() != null ? personaRepository.findById(input.getIdPersona()).get() : new Persona();
-        BeanUtils.copyProperties(input, persona, "codClub","numLicenciaDeportista","numLicenciaEntrenador","numLicenciaJuez");
-        persona.setClub(entityManager.getReference(Club.class, input.getCodClub()));
+    public PersonaDTO create(PersonaDTO input, Boolean esEntrenador, Boolean esDeportista, Boolean esJuez) {
+      Persona persona = input.getIdPersona() != null ? personaRepository.findById(input.getIdPersona()).get() : new Persona();
+        BeanUtils.copyProperties(input, persona);
+        persona.setClub(clubRepository.findClubByIdClub(input.getCodClub()));
         if(esDeportista) persona.setNumLicenciaDeportista(generarLicencias.generarCodigo());
         if(esEntrenador) persona.setNumLicenciaEntrenador(generarLicencias.generarCodigo());
         if (esJuez) persona.setNumLicenciaJuez(generarLicencias.generarCodigo());
 
-        return convertidorPersona.toDto(personaRepository.save(persona));
+        return conversorPersona.toDto(personaRepository.save(persona));
     }
 
     @Override
@@ -60,7 +60,7 @@ public class PersonaServiceImpl implements IPersonaService {
         BeanUtils.copyProperties(input, persona, "codClub","numLicenciaDeportista","numLicenciaEntrenador","numLicenciaJuez");
         persona.setClub(entityManager.getReference(Club.class, input.getCodClub()));
 
-        return convertidorPersona.toDto(personaRepository.save(persona));
+        return conversorPersona.toDto(personaRepository.save(persona));
     }
 
     @Override
@@ -71,7 +71,7 @@ public class PersonaServiceImpl implements IPersonaService {
         if (!personaRepository.existsPersonaByUsuarioAndPassword(loginDTO.getUsuario(),loginDTO.getPassword())){
             throw new BadRequestException("Contraseña incorrecta");
         }
-        return convertidorPersona.toDto(personaRepository.findPersonaByUsuarioAndPassword(loginDTO.getUsuario(), loginDTO.getPassword()));
+        return conversorPersona.toDto(personaRepository.findPersonaByUsuarioAndPassword(loginDTO.getUsuario(), loginDTO.getPassword()));
     }
 
     public PersonaDTO findPersonaById(String id){
@@ -79,7 +79,7 @@ public class PersonaServiceImpl implements IPersonaService {
         System.out.println(idConvertido);
         if(!personaRepository.existsPersonaByIdPersona(idConvertido))
             throw new BadRequestException("la persona con id: " + idConvertido + " no existe");
-        return convertidorPersona.toDto(personaRepository.findPersonaByIdPersona(idConvertido));
+        return conversorPersona.toDto(personaRepository.findPersonaByIdPersona(idConvertido));
     }
     
     @Transactional

@@ -12,4 +12,6 @@ public interface ClubService {
     ClubDTO findClubByPersona (String id);
 
     List<ClubDTO> findAll();
+
+    List<ClubDTO> findClubByPersonaId(Long id);
 }

@@ -15,7 +15,7 @@ public class EspecialidadDTO implements Serializable {
 
     private Long idEspecialidad;
 
-    private String nombre;
+    private String nombreEspecialidad;
 
     private Set<PersonaEspecialidad> personaEspecialidad;
 }

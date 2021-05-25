@@ -7,7 +7,7 @@ import proyectoFCT.gestorLicencias.entity.Club;
 import proyectoFCT.gestorLicencias.repository.PersonaRepository;
 
 @Component
-public class ConvertidorClub {
+public class ConversorClub {
 
     @Autowired
     PersonaRepository personaRepository;

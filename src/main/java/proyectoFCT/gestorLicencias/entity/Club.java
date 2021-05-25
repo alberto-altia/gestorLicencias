@@ -14,6 +14,7 @@ import java.util.Set;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "Club")
 public class Club {
 
     @GeneratedValue(strategy = GenerationType.AUTO)

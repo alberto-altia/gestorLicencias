@@ -4,7 +4,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import proyectoFCT.gestorLicencias.controller.exceptions.BadRequestException;
-import proyectoFCT.gestorLicencias.convertidor.ConvertidorClub;
+import proyectoFCT.gestorLicencias.convertidor.ConversorClub;
 import proyectoFCT.gestorLicencias.domain.dto.ClubDTO;
 import proyectoFCT.gestorLicencias.entity.Club;
 import proyectoFCT.gestorLicencias.repository.ClubRepository;
@@ -29,20 +29,20 @@ public class ClubServiceImpl implements ClubService {
     EntityManager entityManager;
 
     @Autowired
-    ConvertidorClub convertidorClub;
+    ConversorClub conversorClub;
 
     @Autowired
     GenerarLicencias generarLicencias;
 
     @Override
     public ClubDTO crearOuModificarClub(ClubDTO clubDTO) {
-        convertidorClub.validadNumLicenciaEntrenador(clubDTO);
+        conversorClub.validadNumLicenciaEntrenador(clubDTO);
 
         Club club = clubDTO.getIdClub() != null ? clubRepository.findById(clubDTO.getIdClub()).get() : new Club();
         BeanUtils.copyProperties(clubDTO, club, "idClub", "numLicenciaEntrenador","licenciaClub");
         club.setLicenciaClub(generarLicencias.generarCodigo());
         club = clubRepository.save(club);
-        return convertidorClub.toDto(club);
+        return conversorClub.toDto(club);
     }
 
     @Override
@@ -50,14 +50,22 @@ public class ClubServiceImpl implements ClubService {
         Long idConvertido = Long.parseLong(id);
         if(!personaRepository.existsPersonaByIdPersona(idConvertido))
             throw new BadRequestException("Id persona no existente");
-        return convertidorClub.toDto(clubRepository.findClubByPersonas(personaRepository.findPersonaByIdPersona(idConvertido)));
+        return conversorClub.toDto(clubRepository.findClubByPersonas(personaRepository.findPersonaByIdPersona(idConvertido)));
     }
 
     @Override
     public List<ClubDTO> findAll() {
         return  clubRepository.findAll()
                 .stream()
-                .map(convertidorClub::toDto)
+                .map(conversorClub::toDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ClubDTO> findClubByPersonaId(Long id) {
+        return  clubRepository.findClubsByPersonas(personaRepository.findPersonaByIdPersona(id))
+                .stream()
+                .map(conversorClub::toDto)
                 .collect(Collectors.toList());
     }
 
