@@ -16,13 +16,9 @@ public class GenerarLicencias {
     public String generarCodigo(){
         Long numero;
         numero = (long)(Math.random() * ((10000 - 100 + 1) + 100));
-
         Random r = new Random();
         char c = (char)(r.nextInt(26) + 'a');
-
         String resultado = numero.toString() + c;
-        System.out.println(resultado);
-
         if(!personaRepository.existsPersonaByNumLicenciaDeportista(resultado) ||
                 !personaRepository.existsPersonaByNumLicenciaEntrenador(resultado) ||
                 !personaRepository.existsPersonaByNumLicenciaJuez(resultado)){

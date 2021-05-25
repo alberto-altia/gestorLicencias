@@ -90,6 +90,9 @@ public class PersonaServiceImpl implements IPersonaService {
         return id;
     }
 
+    //todo dejar comentado json para crear personas
+
+
 
 
 }
