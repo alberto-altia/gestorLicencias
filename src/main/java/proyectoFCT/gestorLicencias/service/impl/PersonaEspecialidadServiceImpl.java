@@ -124,6 +124,14 @@ public class PersonaEspecialidadServiceImpl implements PersonaEspecialidadServic
     }
 
     @Override
+    public List<LicenciasActivasDTO> todasLicencias() {
+        return personaEspecialidadRepository.findAll()
+                .stream()
+                .map(this::toDtoLicencias)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     @Transactional
     public CrearLicenciaDTO crearNuevaLicencia(CrearLicenciaDTO crearLicenciaDTO) {
         PersonaEspecialidad personaEspecialidad = new PersonaEspecialidad();

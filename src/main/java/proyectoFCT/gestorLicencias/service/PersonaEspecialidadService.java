@@ -18,11 +18,8 @@ public interface PersonaEspecialidadService {
 
     List<LicenciasActivasDTO> licenciasActivas(Long idPersona);
 
+    List<LicenciasActivasDTO> todasLicencias();
+
     CrearLicenciaDTO crearNuevaLicencia(CrearLicenciaDTO crearLicenciaDTO);
 
-//    PersonaEspecialidad crearNuevaLicenciaDeportista(CrearLicenciaDTO crearLicenciaDTO);
-//
-//    PersonaEspecialidad crearNuevaLicenciaEntrenador(CrearLicenciaDTO crearLicenciaDTO);
-//
-//    PersonaEspecialidad crearNuevaLicenciaJuez(CrearLicenciaDTO crearLicenciaDTO);
 }

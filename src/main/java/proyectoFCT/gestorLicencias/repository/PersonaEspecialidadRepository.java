@@ -18,6 +18,6 @@ public interface PersonaEspecialidadRepository extends JpaRepository<PersonaEspe
             "FROM especialidad \n" +
             "INNER JOIN persona_especialidad \n" +
             "ON id_especialidad = cod_especialidad \n" +
-            "WHERE  cod_persona = :id ",nativeQuery = true)
+            "WHERE  cod_persona = :id ;",nativeQuery = true)
     List<PersonaEspecialidad> licenciasActivas(@Param("id") Long cod_persona);
 }

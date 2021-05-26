@@ -47,4 +47,8 @@ public class PersonaEspecialidadRestController {
     public ResponseEntity<List<LicenciasActivasDTO>> obtenerLicencias(@PathVariable Long id) {
         return ResponseEntity.ok(personaEspecialidadService.licenciasActivas(id));
     }
+    @GetMapping("/licencias")
+    public ResponseEntity<List<LicenciasActivasDTO>> obtenerAllLicencias() {
+        return ResponseEntity.ok(personaEspecialidadService.todasLicencias());
+    }
 }
