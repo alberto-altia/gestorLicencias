@@ -12,6 +12,7 @@ import proyectoFCT.gestorLicencias.service.impl.PersonaEspecialidadServiceImpl;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class PersonaEspecialidadRestController {
 
     @Autowired
@@ -33,7 +34,7 @@ public class PersonaEspecialidadRestController {
         return ResponseEntity.ok(personaEspecialidadDTO);
     }
 
-    @GetMapping("/personas")
+    @GetMapping("/personasEspecialidad")
     public ResponseEntity<List<PersonaEspecialidadFindAllDto>> obtenerPersonas() {
         return ResponseEntity.ok(personaEspecialidadService.findAll());
     }

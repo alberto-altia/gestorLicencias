@@ -12,7 +12,7 @@ import proyectoFCT.gestorLicencias.entity.PersonaEspecialidad;
 import proyectoFCT.gestorLicencias.repository.IEspecialidadRepository;
 import proyectoFCT.gestorLicencias.repository.PersonaEspecialidadRepository;
 import proyectoFCT.gestorLicencias.repository.PersonaRepository;
-import proyectoFCT.gestorLicencias.service.IPersonaService;
+import proyectoFCT.gestorLicencias.service.PersonaService;
 import proyectoFCT.gestorLicencias.service.PersonaEspecialidadService;
 
 import javax.persistence.EntityManager;
@@ -35,7 +35,7 @@ public class PersonaEspecialidadServiceImpl implements PersonaEspecialidadServic
     ConversorPersona conversorPersona;
 
     @Autowired
-    IPersonaService personaService;
+    PersonaService personaService;
 
     @Autowired
     PersonaRepository personaRepository;

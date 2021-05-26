@@ -14,6 +14,7 @@ public interface PersonaEspecialidadRepository extends JpaRepository<PersonaEspe
 
     void deletePersonaEspecialidadByPersona (Persona persona);
 
-    @Query(value = "SELECT e.nombreEspecialidad ,p.nivel ,p.fechaActivacion FROM Especialidad e INNER JOIN PersonaEspecialidad p ON e.idEspecialidad = p.especialidad.idEspecialidad WHERE  p.persona.idPersona = ?1 ")
+    @Query(value = "select e.nombreEspecialidad, p.nivel ,p.fechaActivacion from Especialidad e inner join PersonaEspecialidad p on e.idEspecialidad= p.especialidad.idEspecialidad where p.persona.idPersona = ?1 " )
+    //@Query(value = "SELECT e.nombre_especialidad ,p.nivel ,p.fecha_activacion FROM especialidad e INNER JOIN persona_especialidad p ON e.id_especialidad = p.cod_especialidad WHERE  p.cod_persona = ?1 ",nativeQuery = true)
     List<PersonaEspecialidad> licenciasActivas(Long cod_persona);
 }

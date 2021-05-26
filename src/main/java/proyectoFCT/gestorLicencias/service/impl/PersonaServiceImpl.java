@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import proyectoFCT.gestorLicencias.controller.exceptions.BadRequestException;
 import proyectoFCT.gestorLicencias.convertidor.ConversorPersona;
+import proyectoFCT.gestorLicencias.domain.dto.LicenciasActivasDTO;
 import proyectoFCT.gestorLicencias.domain.dto.LoginDTO;
 import proyectoFCT.gestorLicencias.domain.dto.PersonaDTO;
 import proyectoFCT.gestorLicencias.entity.Club;
@@ -12,14 +13,16 @@ import proyectoFCT.gestorLicencias.entity.Persona;
 import proyectoFCT.gestorLicencias.repository.ClubRepository;
 import proyectoFCT.gestorLicencias.repository.PersonaEspecialidadRepository;
 import proyectoFCT.gestorLicencias.repository.PersonaRepository;
-import proyectoFCT.gestorLicencias.service.IPersonaService;
+import proyectoFCT.gestorLicencias.service.PersonaService;
 import proyectoFCT.gestorLicencias.utils.GenerarLicencias;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
-public class PersonaServiceImpl implements IPersonaService {
+public class PersonaServiceImpl implements PersonaService {
     @Autowired
     PersonaRepository personaRepository;
 
@@ -48,6 +51,14 @@ public class PersonaServiceImpl implements IPersonaService {
         if (esJuez) persona.setNumLicenciaJuez(generarLicencias.generarCodigo());
 
         return conversorPersona.toDto(personaRepository.save(persona));
+    }
+
+    @Override
+    public List<PersonaDTO> allPersonas() {
+        return personaRepository.findAll()
+                .stream()
+                .map(this::personaToDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -89,7 +100,24 @@ public class PersonaServiceImpl implements IPersonaService {
         personaRepository.deleteById(id);
         return id;
     }
+    public PersonaDTO personaToDTO(Persona entity) {
+        PersonaDTO dto = new PersonaDTO();
 
+        dto.setIdPersona(entity.getIdPersona());
+        dto.setNombreApellidos(entity.getNombreApellidos());
+        dto.setDNI(entity.getDNI());
+        dto.setFechaNacimiento(entity.getFechaNacimiento());
+        dto.setTelefono(entity.getTelefono());
+        dto.setEmail(entity.getEmail());
+        dto.setNumLicenciaDeportista(entity.getNumLicenciaDeportista());
+        dto.setNumLicenciaEntrenador(entity.getNumLicenciaEntrenador());
+        dto.setNumLicenciaJuez(entity.getNumLicenciaJuez());
+        dto.setCodClub(entity.getClub().getIdClub());
+        dto.setUsuario(entity.getUsuario());
+        dto.setPassword(entity.getPassword());
+
+        return dto;
+    }
     //todo dejar comentado json para crear personas
 
 

@@ -7,13 +7,10 @@ import org.springframework.web.bind.annotation.*;
 import proyectoFCT.gestorLicencias.controller.exceptions.BadRequestException;
 import proyectoFCT.gestorLicencias.domain.dto.LoginDTO;
 import proyectoFCT.gestorLicencias.domain.dto.PersonaDTO;
-import proyectoFCT.gestorLicencias.domain.dto.PersonaEspecialidadDTO;
-import proyectoFCT.gestorLicencias.domain.dto.PersonaEspecialidadFindAllDto;
 import proyectoFCT.gestorLicencias.service.PersonaEspecialidadService;
 import proyectoFCT.gestorLicencias.service.impl.PersonaServiceImpl;
 
 import javax.persistence.EntityNotFoundException;
-import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -28,26 +25,34 @@ public class PersonaRestController {
 
     @GetMapping("/personas/{id}")
     public ResponseEntity<PersonaDTO> obtenerPersonasById(@PathVariable String id) {
-        try{
+        try {
             return ResponseEntity.ok(personaService.findPersonaById(id));
-        }catch(EntityNotFoundException e) {
+        } catch (EntityNotFoundException e) {
+            throw new BadRequestException("id incorrecto");
+        }
+    }
+    @GetMapping("/personas")
+    public ResponseEntity<List> allPersonas() {
+        try {
+            return ResponseEntity.ok(personaService.allPersonas());
+        } catch (EntityNotFoundException e) {
             throw new BadRequestException("id incorrecto");
         }
     }
     @PostMapping("/editarPersona")
-    public ResponseEntity<PersonaDTO> editarPersona(@RequestBody PersonaDTO personaDTO){
-        try{
+    public ResponseEntity<PersonaDTO> editarPersona(@RequestBody PersonaDTO personaDTO) {
+        try {
             return ResponseEntity.ok(personaService.Update(personaDTO));
-        }catch(EntityNotFoundException e) {
+        } catch (EntityNotFoundException e) {
             throw new BadRequestException("id incorrecto");
         }
     }
 
     @DeleteMapping("/eliminarPersona/{id}")
-    public ResponseEntity<?> eliminarPersona(@PathVariable String id){
+    public ResponseEntity<?> eliminarPersona(@PathVariable String id) {
         try {
-           return ResponseEntity.ok(personaService.delete(id));
-        }catch (Exception e){
+            return ResponseEntity.ok(personaService.delete(id));
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             throw new BadRequestException("Error al eliminar elemento");
         }
@@ -55,10 +60,10 @@ public class PersonaRestController {
 
     @PostMapping("/login")
     public ResponseEntity<?> nueva(@RequestBody LoginDTO loginDTO) {
-        try{
-        	return ResponseEntity.ok(personaService.login(loginDTO));
-        }catch(EntityNotFoundException e) {
-        	throw new BadRequestException("error endpoint");
+        try {
+            return ResponseEntity.ok(personaService.login(loginDTO));
+        } catch (EntityNotFoundException e) {
+            throw new BadRequestException("error endpoint");
         }
     }
 
