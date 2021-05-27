@@ -16,6 +16,7 @@ public class Especialidad {
 
 
     @Id
+    @Column(name = "idEspecialidad")
     private Long idEspecialidad;
 
     @Column(name = "nombreEspecialidad")

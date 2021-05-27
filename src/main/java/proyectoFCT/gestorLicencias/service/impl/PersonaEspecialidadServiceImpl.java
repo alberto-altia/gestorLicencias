@@ -117,7 +117,8 @@ public class PersonaEspecialidadServiceImpl implements PersonaEspecialidadServic
 
     @Override
     public List<LicenciasActivasDTO> licenciasActivas(Long idPersona) {
-        return personaEspecialidadRepository.licenciasActivas(idPersona)
+         Long id = 1L;
+        return personaEspecialidadRepository.licenciasActivas(id)
                 .stream()
                 .map(this::toDtoLicencias)
                 .collect(Collectors.toList());
