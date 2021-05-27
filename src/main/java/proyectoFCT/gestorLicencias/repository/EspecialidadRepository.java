@@ -4,7 +4,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import proyectoFCT.gestorLicencias.entity.Especialidad;
 
-public interface IEspecialidadRepository extends CrudRepository<Especialidad, Long>{
+public interface EspecialidadRepository extends CrudRepository<Especialidad, Long>{
 
     Especialidad findEspecialidadByNombreEspecialidad (String especialidad);
 }

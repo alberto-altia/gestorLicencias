@@ -9,7 +9,7 @@ import proyectoFCT.gestorLicencias.domain.dto.*;
 import proyectoFCT.gestorLicencias.entity.Especialidad;
 import proyectoFCT.gestorLicencias.entity.Persona;
 import proyectoFCT.gestorLicencias.entity.PersonaEspecialidad;
-import proyectoFCT.gestorLicencias.repository.IEspecialidadRepository;
+import proyectoFCT.gestorLicencias.repository.EspecialidadRepository;
 import proyectoFCT.gestorLicencias.repository.PersonaEspecialidadRepository;
 import proyectoFCT.gestorLicencias.repository.PersonaRepository;
 import proyectoFCT.gestorLicencias.service.PersonaService;
@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 public class PersonaEspecialidadServiceImpl implements PersonaEspecialidadService {
 
     @Autowired
-    IEspecialidadRepository especialidadRepository;
+    EspecialidadRepository especialidadRepository;
 
     @Autowired
     EntityManager entityManager;
