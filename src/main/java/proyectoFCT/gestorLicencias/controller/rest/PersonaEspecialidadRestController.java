@@ -41,7 +41,6 @@ public class PersonaEspecialidadRestController {
 
     @PostMapping("/nuevaLicencia")
     public ResponseEntity<CrearLicenciaDTO> crearLicencia(@RequestBody CrearLicenciaDTO crearLicenciaDTO) {
-
         return ResponseEntity.ok(personaEspecialidadService.crearNuevaLicencia(crearLicenciaDTO));
     }
     @GetMapping("/licencias/{id}")

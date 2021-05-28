@@ -117,8 +117,9 @@ public class PersonaEspecialidadServiceImpl implements PersonaEspecialidadServic
 
     @Override
     public List<LicenciasActivasDTO> licenciasActivas(Long idPersona) {
-         Long id = 1L;
-        return personaEspecialidadRepository.licenciasActivas(id)
+        if(!personaRepository.existsPersonaByIdPersona(idPersona))
+            throw new BadRequestException("Id persona no existente (id = " + idPersona + ")");
+        return personaEspecialidadRepository.licenciasActivas(idPersona)
                 .stream()
                 .map(this::toDtoLicencias)
                 .collect(Collectors.toList());
