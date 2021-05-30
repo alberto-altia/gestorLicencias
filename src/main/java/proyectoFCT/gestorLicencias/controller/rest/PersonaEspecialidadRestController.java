@@ -3,12 +3,14 @@ package proyectoFCT.gestorLicencias.controller.rest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import proyectoFCT.gestorLicencias.controller.exceptions.BadRequestException;
 import proyectoFCT.gestorLicencias.domain.dto.CrearLicenciaDTO;
 import proyectoFCT.gestorLicencias.domain.dto.LicenciasActivasDTO;
 import proyectoFCT.gestorLicencias.domain.dto.PersonaEspecialidadCrearDTO;
 import proyectoFCT.gestorLicencias.domain.dto.PersonaEspecialidadFindAllDto;
 import proyectoFCT.gestorLicencias.service.impl.PersonaEspecialidadServiceImpl;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @RestController
@@ -50,5 +52,15 @@ public class PersonaEspecialidadRestController {
     @GetMapping("/licencias")
     public ResponseEntity<List<LicenciasActivasDTO>> obtenerAllLicencias() {
         return ResponseEntity.ok(personaEspecialidadService.todasLicencias());
+    }
+    @DeleteMapping("eliminarLicencias/{id}")
+    public ResponseEntity<?> eliminarLicencia(@PathVariable Long id){
+        try {
+            personaEspecialidadService.eliminarLicencia(id);
+        } catch (EntityNotFoundException e) {
+            System.out.println(e.getMessage());
+            throw new BadRequestException("id incorrecto");
+        }
+        return ResponseEntity.ok("Licencia eliminada correctamente");
     }
 }

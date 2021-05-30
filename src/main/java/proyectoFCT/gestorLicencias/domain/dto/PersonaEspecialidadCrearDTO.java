@@ -11,7 +11,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class PersonaEspecialidadCrearDTO implements Serializable {
 
-    private Long codEspecialidad;
+    private String nombreEspecialidad;
 
     private PersonaDTO persona;
 

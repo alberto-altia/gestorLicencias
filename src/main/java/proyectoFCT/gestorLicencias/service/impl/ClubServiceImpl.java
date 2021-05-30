@@ -5,8 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import proyectoFCT.gestorLicencias.controller.exceptions.BadRequestException;
 import proyectoFCT.gestorLicencias.convertidor.ConversorClub;
+import proyectoFCT.gestorLicencias.convertidor.ConversorPersona;
 import proyectoFCT.gestorLicencias.domain.dto.ClubDTO;
+import proyectoFCT.gestorLicencias.domain.dto.DeportistasClubDTO;
+import proyectoFCT.gestorLicencias.domain.dto.PersonaDTO;
 import proyectoFCT.gestorLicencias.entity.Club;
+import proyectoFCT.gestorLicencias.entity.Persona;
 import proyectoFCT.gestorLicencias.repository.ClubRepository;
 import proyectoFCT.gestorLicencias.repository.PersonaRepository;
 import proyectoFCT.gestorLicencias.service.ClubService;
@@ -30,6 +34,9 @@ public class ClubServiceImpl implements ClubService {
 
     @Autowired
     ConversorClub conversorClub;
+
+    @Autowired
+    ConversorPersona conversorPersona;
 
     @Autowired
     GenerarLicencias generarLicencias;
@@ -69,5 +76,21 @@ public class ClubServiceImpl implements ClubService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<DeportistasClubDTO> findPersonaByIdClub(Long id) {
+        if(!clubRepository.existsById(id))
+            throw new BadRequestException("Id club no existente");
+        return personaRepository.findPersonaByClub(clubRepository.findClubByIdClub(id))
+                .stream()
+                .map(this::toDTO)
+                .collect(Collectors.toList());
+    }
 
+    public DeportistasClubDTO toDTO ( Persona entity){
+        DeportistasClubDTO dto = new DeportistasClubDTO();
+        dto.setNombreApellidos(entity.getNombreApellidos());
+        dto.setDni(entity.getDNI());
+        dto.setNumLicenciaDeportista(entity.getNumLicenciaDeportista());
+        return dto;
+    }
 }

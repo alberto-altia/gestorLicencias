@@ -37,4 +37,12 @@ public class ClubRestController {
             throw new BadRequestException("id incorrecto");
         }
     }
+    @GetMapping("/deportistas/{id}")
+    public ResponseEntity<?> findPersonasByIdClub(@PathVariable Long id){
+        try{
+            return ResponseEntity.ok(clubService.findPersonaByIdClub(id));
+        }catch(EntityNotFoundException e) {
+            throw new BadRequestException("id incorrecto");
+        }
+    }
 }

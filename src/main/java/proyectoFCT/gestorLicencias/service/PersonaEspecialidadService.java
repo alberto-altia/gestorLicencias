@@ -22,4 +22,6 @@ public interface PersonaEspecialidadService {
 
     CrearLicenciaDTO crearNuevaLicencia(CrearLicenciaDTO crearLicenciaDTO);
 
+    void eliminarLicencia (Long id);
+
 }

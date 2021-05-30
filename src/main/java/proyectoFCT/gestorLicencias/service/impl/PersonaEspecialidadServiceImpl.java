@@ -5,15 +5,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import proyectoFCT.gestorLicencias.controller.exceptions.BadRequestException;
 import proyectoFCT.gestorLicencias.convertidor.ConversorPersona;
-import proyectoFCT.gestorLicencias.domain.dto.*;
+import proyectoFCT.gestorLicencias.domain.dto.CrearLicenciaDTO;
+import proyectoFCT.gestorLicencias.domain.dto.LicenciasActivasDTO;
+import proyectoFCT.gestorLicencias.domain.dto.PersonaEspecialidadCrearDTO;
+import proyectoFCT.gestorLicencias.domain.dto.PersonaEspecialidadFindAllDto;
 import proyectoFCT.gestorLicencias.entity.Especialidad;
 import proyectoFCT.gestorLicencias.entity.Persona;
 import proyectoFCT.gestorLicencias.entity.PersonaEspecialidad;
 import proyectoFCT.gestorLicencias.repository.EspecialidadRepository;
 import proyectoFCT.gestorLicencias.repository.PersonaEspecialidadRepository;
 import proyectoFCT.gestorLicencias.repository.PersonaRepository;
-import proyectoFCT.gestorLicencias.service.PersonaService;
 import proyectoFCT.gestorLicencias.service.PersonaEspecialidadService;
+import proyectoFCT.gestorLicencias.service.PersonaService;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
@@ -46,14 +49,14 @@ public class PersonaEspecialidadServiceImpl implements PersonaEspecialidadServic
     @Transactional
     public PersonaEspecialidadCrearDTO crearDeportista(PersonaEspecialidadCrearDTO deportista) {
         //Especialidad non existe
-        if (!especialidadRepository.existsById(deportista.getCodEspecialidad()))
+        if (!especialidadRepository.existsById(especialidadRepository.findEspecialidadByNombreEspecialidad(deportista.getNombreEspecialidad()).getIdEspecialidad()))
             throw new BadRequestException("Codigo especialidad no valido");
         //Usuario collido
         if (personaRepository.existsPersonaByUsuario(deportista.getPersona().getUsuario()))
             throw new BadRequestException("Usuario existente");
 
         PersonaEspecialidad pEsp = new PersonaEspecialidad();
-        BeanUtils.copyProperties(deportista, pEsp,"fechaActivacion");
+        BeanUtils.copyProperties(deportista, pEsp, "fechaActivacion");
 
         LocalDate now = LocalDate.now();
         DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -62,7 +65,7 @@ public class PersonaEspecialidadServiceImpl implements PersonaEspecialidadServic
         pEsp.setEsDeportista(true);
         pEsp.setEsEntrenador(false);
         pEsp.setPersona(entityManager.getReference(Persona.class, personaService.create(deportista.getPersona(), false, true, false).getIdPersona()));
-        pEsp.setEspecialidad(entityManager.getReference(Especialidad.class, deportista.getCodEspecialidad()));
+        pEsp.setEspecialidad(entityManager.getReference(Especialidad.class, especialidadRepository.findEspecialidadByNombreEspecialidad(deportista.getNombreEspecialidad()).getIdEspecialidad()));
         personaEspecialidadRepository.save(pEsp);
         return deportista;
     }
@@ -70,7 +73,7 @@ public class PersonaEspecialidadServiceImpl implements PersonaEspecialidadServic
     @Transactional
     public PersonaEspecialidadCrearDTO crearEntrenador(PersonaEspecialidadCrearDTO entrenador) {
         //Especialidad non existe
-        if (!especialidadRepository.existsById(entrenador.getCodEspecialidad()))
+        if (!especialidadRepository.existsById(especialidadRepository.findEspecialidadByNombreEspecialidad(entrenador.getNombreEspecialidad()).getIdEspecialidad()))
             throw new BadRequestException("Codigo especialidad no valido");
         //Usuario collido
         if (personaRepository.existsPersonaByUsuario(entrenador.getPersona().getUsuario()))
@@ -82,7 +85,7 @@ public class PersonaEspecialidadServiceImpl implements PersonaEspecialidadServic
         pEsp.setEsDeportista(false);
         pEsp.setEsEntrenador(true);
         pEsp.setPersona(entityManager.getReference(Persona.class, personaService.create(entrenador.getPersona(), true, false, false).getIdPersona()));
-        pEsp.setEspecialidad(entityManager.getReference(Especialidad.class, entrenador.getCodEspecialidad()));
+        pEsp.setEspecialidad(entityManager.getReference(Especialidad.class, especialidadRepository.findEspecialidadByNombreEspecialidad(entrenador.getNombreEspecialidad()).getIdEspecialidad()));
         personaEspecialidadRepository.save(pEsp);
         return entrenador;
     }
@@ -90,7 +93,7 @@ public class PersonaEspecialidadServiceImpl implements PersonaEspecialidadServic
     @Transactional
     public PersonaEspecialidadCrearDTO crearJuez(PersonaEspecialidadCrearDTO juez) {
         //Especialidad non existe
-        if (!especialidadRepository.existsById(juez.getCodEspecialidad()))
+        if (!especialidadRepository.existsById(especialidadRepository.findEspecialidadByNombreEspecialidad(juez.getNombreEspecialidad()).getIdEspecialidad()))
             throw new BadRequestException("Codigo especialidad no valido");
         //Usuario collido
         if (personaRepository.existsPersonaByUsuario(juez.getPersona().getUsuario()))
@@ -102,7 +105,7 @@ public class PersonaEspecialidadServiceImpl implements PersonaEspecialidadServic
         pEsp.setEsDeportista(false);
         pEsp.setEsEntrenador(false);
         pEsp.setPersona(entityManager.getReference(Persona.class, personaService.create(juez.getPersona(), false, false, true).getIdPersona()));
-        pEsp.setEspecialidad(entityManager.getReference(Especialidad.class, juez.getCodEspecialidad()));
+        pEsp.setEspecialidad(entityManager.getReference(Especialidad.class, especialidadRepository.findEspecialidadByNombreEspecialidad(juez.getNombreEspecialidad()).getIdEspecialidad()));
         personaEspecialidadRepository.save(pEsp);
         return juez;
     }
@@ -117,7 +120,7 @@ public class PersonaEspecialidadServiceImpl implements PersonaEspecialidadServic
 
     @Override
     public List<LicenciasActivasDTO> licenciasActivas(Long idPersona) {
-        if(!personaRepository.existsPersonaByIdPersona(idPersona))
+        if (!personaRepository.existsPersonaByIdPersona(idPersona))
             throw new BadRequestException("Id persona no existente (id = " + idPersona + ")");
         return personaEspecialidadRepository.licenciasActivas(idPersona)
                 .stream()
@@ -136,8 +139,10 @@ public class PersonaEspecialidadServiceImpl implements PersonaEspecialidadServic
     @Override
     @Transactional
     public CrearLicenciaDTO crearNuevaLicencia(CrearLicenciaDTO crearLicenciaDTO) {
-        if(!personaRepository.existsPersonaByIdPersona(crearLicenciaDTO.getCodPersona()))
+        if (!personaRepository.existsPersonaByIdPersona(crearLicenciaDTO.getCodPersona()))
             throw new BadRequestException("Usuario no existente");
+        if (personaEspecialidadRepository.existsPersonaEspecialidadByEspecialidadAndPersona(especialidadRepository.findEspecialidadByNombreEspecialidad(crearLicenciaDTO.getNombreEspecialidad()), personaRepository.findPersonaByIdPersona(crearLicenciaDTO.getCodPersona())))
+            throw new BadRequestException("Ya existe una licencia activada");
 
         PersonaEspecialidad personaEspecialidad = new PersonaEspecialidad();
         personaEspecialidad.setEspecialidad(especialidadRepository.findEspecialidadByNombreEspecialidad(crearLicenciaDTO.getNombreEspecialidad()));
@@ -151,9 +156,19 @@ public class PersonaEspecialidadServiceImpl implements PersonaEspecialidadServic
         personaEspecialidad.setEsDeportista(crearLicenciaDTO.getEsDeportista());
         personaEspecialidad.setEsEntrenador(crearLicenciaDTO.getEsEntrenador());
         personaEspecialidad.setEsJuez(crearLicenciaDTO.getEsJuez());
+
         personaEspecialidadRepository.save(personaEspecialidad);
         return crearLicenciaDTO;
     }
+
+    @Override
+    @Transactional
+    public void eliminarLicencia(Long id) {
+        if(!personaEspecialidadRepository.existsPersonaEspecialidadById(id))
+            throw new BadRequestException("Licencia no encontrada");
+        personaEspecialidadRepository.deletePersonaEspecialidadById(id.longValue());
+    }
+
 
     public PersonaEspecialidadFindAllDto toDto(PersonaEspecialidad entity) {
         PersonaEspecialidadFindAllDto dto = new PersonaEspecialidadFindAllDto();
@@ -167,11 +182,16 @@ public class PersonaEspecialidadServiceImpl implements PersonaEspecialidadServic
         dto.setNivel(entity.getNivel());
         return dto;
     }
+
     public LicenciasActivasDTO toDtoLicencias(PersonaEspecialidad entity) {
         LicenciasActivasDTO dto = new LicenciasActivasDTO();
+        dto.setIdLicencia(entity.getId());
         dto.setNombreEspecialidad(entity.getEspecialidad().getNombreEspecialidad());
         dto.setFechaActivacion(entity.getFechaActivacion());
         dto.setNivel(entity.getNivel());
+        if (entity.getEsDeportista()) dto.setTipoLicencia("Deportista");
+        if (entity.getEsEntrenador()) dto.setTipoLicencia("Entrenador");
+        if (entity.getEsJuez()) dto.setTipoLicencia("Juez");
         return dto;
     }
 }

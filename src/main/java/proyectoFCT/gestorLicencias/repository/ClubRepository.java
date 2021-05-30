@@ -17,4 +17,5 @@ public interface ClubRepository extends JpaRepository<Club,Long> {
 
     List<Club> findClubsByPersonas (Persona idPersona);
 
+
 }
