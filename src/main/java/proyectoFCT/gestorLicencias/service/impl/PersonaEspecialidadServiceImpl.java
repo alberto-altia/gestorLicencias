@@ -139,9 +139,10 @@ public class PersonaEspecialidadServiceImpl implements PersonaEspecialidadServic
     @Override
     @Transactional
     public CrearLicenciaDTO crearNuevaLicencia(CrearLicenciaDTO crearLicenciaDTO) {
+        System.out.println(crearLicenciaDTO.getCodPersona() + " " + crearLicenciaDTO.getNombreEspecialidad());
         if (!personaRepository.existsPersonaByIdPersona(crearLicenciaDTO.getCodPersona()))
             throw new BadRequestException("Usuario no existente");
-        if (personaEspecialidadRepository.existsPersonaEspecialidadByEspecialidadAndPersona(especialidadRepository.findEspecialidadByNombreEspecialidad(crearLicenciaDTO.getNombreEspecialidad()), personaRepository.findPersonaByIdPersona(crearLicenciaDTO.getCodPersona())))
+        if (personaEspecialidadRepository.existsPersonaEspecialidadByEspecialidadAndPersonaAndEsDeportistaAndAndEsEntrenadorAndEsJuez(especialidadRepository.findEspecialidadByNombreEspecialidad(crearLicenciaDTO.getNombreEspecialidad()), personaRepository.findPersonaByIdPersona(crearLicenciaDTO.getCodPersona()),crearLicenciaDTO.getEsDeportista(),crearLicenciaDTO.getEsEntrenador(),crearLicenciaDTO.getEsJuez()))
             throw new BadRequestException("Ya existe una licencia activada");
 
         PersonaEspecialidad personaEspecialidad = new PersonaEspecialidad();

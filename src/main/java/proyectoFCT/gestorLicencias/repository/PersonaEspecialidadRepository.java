@@ -17,7 +17,7 @@ public interface PersonaEspecialidadRepository extends JpaRepository<PersonaEspe
     @Query(value = "SELECT * FROM especialidad e , persona_especialidad p WHERE e.id_especialidad = p.cod_especialidad and p.cod_persona = ?1 ",nativeQuery = true)
     List<PersonaEspecialidad> licenciasActivas(Long id);
 
-    Boolean existsPersonaEspecialidadByEspecialidadAndPersona (Especialidad especialidad,Persona persona);
+    Boolean existsPersonaEspecialidadByEspecialidadAndPersonaAndEsDeportistaAndAndEsEntrenadorAndEsJuez (Especialidad especialidad,Persona persona,Boolean esDeportista,Boolean esEntrenador, Boolean esJuez);
 
     Boolean existsPersonaEspecialidadById (Long id);
 
