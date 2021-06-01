@@ -30,5 +30,5 @@ public interface PersonaRepository extends JpaRepository<Persona, Long> {
 
     Boolean existsPersonaByNumLicenciaJuez(String licenciaJuez);
 
-    List<Persona> findPersonaByClub (Club idClub);
+    List<Persona> findPersonaByClub(Club idClub);
 }

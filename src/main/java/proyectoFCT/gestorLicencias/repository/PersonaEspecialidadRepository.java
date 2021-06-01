@@ -10,20 +10,16 @@ import proyectoFCT.gestorLicencias.entity.PersonaEspecialidad;
 import java.util.List;
 
 @Repository
-public interface PersonaEspecialidadRepository extends JpaRepository<PersonaEspecialidad,Long> {
+public interface PersonaEspecialidadRepository extends JpaRepository<PersonaEspecialidad, Long> {
 
-    void deletePersonaEspecialidadByPersona (Persona persona);
+    void deletePersonaEspecialidadByPersona(Persona persona);
 
-    @Query(value = "SELECT * FROM especialidad e , persona_especialidad p WHERE e.id_especialidad = p.cod_especialidad and p.cod_persona = ?1 ",nativeQuery = true)
+    @Query(value = "SELECT * FROM especialidad e , persona_especialidad p WHERE e.id_especialidad = p.cod_especialidad and p.cod_persona = ?1 ", nativeQuery = true)
     List<PersonaEspecialidad> licenciasActivas(Long id);
 
-    Boolean existsPersonaEspecialidadByEspecialidadAndPersonaAndEsDeportistaAndAndEsEntrenadorAndEsJuez (Especialidad especialidad,Persona persona,Boolean esDeportista,Boolean esEntrenador, Boolean esJuez);
+    Boolean existsPersonaEspecialidadByEspecialidadAndPersonaAndEsDeportistaAndAndEsEntrenadorAndEsJuez(Especialidad especialidad, Persona persona, Boolean esDeportista, Boolean esEntrenador, Boolean esJuez);
 
-    Boolean existsPersonaEspecialidadById (Long id);
+    Boolean existsPersonaEspecialidadById(Long id);
 
-    List<PersonaEspecialidad> findPersonaEspecialidadById (Long id);
-
-    List<PersonaEspecialidad> findPersonaEspecialidadByEspecialidadAndPersonaAndNivel (Especialidad especialidad, Persona persona, String nivel);
-
-    void deletePersonaEspecialidadById (Long id);
+    void deletePersonaEspecialidadById(Long id);
 }

@@ -6,7 +6,8 @@ import lombok.Setter;
 
 import java.io.Serializable;
 
-@Getter @Setter
+@Getter
+@Setter
 @NoArgsConstructor
 public class EspecialidadFinAllDTO implements Serializable {
 

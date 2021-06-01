@@ -3,6 +3,7 @@ package proyectoFCT.gestorLicencias.service.impl;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import proyectoFCT.gestorLicencias.aspects.AnotacionLogMetodos;
 import proyectoFCT.gestorLicencias.controller.exceptions.BadRequestException;
 import proyectoFCT.gestorLicencias.convertidor.ConversorPersona;
 import proyectoFCT.gestorLicencias.domain.dto.CrearLicenciaDTO;
@@ -47,6 +48,7 @@ public class PersonaEspecialidadServiceImpl implements PersonaEspecialidadServic
     PersonaEspecialidadRepository personaEspecialidadRepository;
 
     @Transactional
+    @AnotacionLogMetodos(operacion = "crearDeportista")
     public PersonaEspecialidadCrearDTO crearDeportista(PersonaEspecialidadCrearDTO deportista) {
         //Especialidad non existe
         if (!especialidadRepository.existsById(especialidadRepository.findEspecialidadByNombreEspecialidad(deportista.getNombreEspecialidad()).getIdEspecialidad()))
@@ -71,6 +73,7 @@ public class PersonaEspecialidadServiceImpl implements PersonaEspecialidadServic
     }
 
     @Transactional
+    @AnotacionLogMetodos(operacion = "crearEntrenador")
     public PersonaEspecialidadCrearDTO crearEntrenador(PersonaEspecialidadCrearDTO entrenador) {
         //Especialidad non existe
         if (!especialidadRepository.existsById(especialidadRepository.findEspecialidadByNombreEspecialidad(entrenador.getNombreEspecialidad()).getIdEspecialidad()))
@@ -91,6 +94,7 @@ public class PersonaEspecialidadServiceImpl implements PersonaEspecialidadServic
     }
 
     @Transactional
+    @AnotacionLogMetodos(operacion = "crearJuez")
     public PersonaEspecialidadCrearDTO crearJuez(PersonaEspecialidadCrearDTO juez) {
         //Especialidad non existe
         if (!especialidadRepository.existsById(especialidadRepository.findEspecialidadByNombreEspecialidad(juez.getNombreEspecialidad()).getIdEspecialidad()))
@@ -111,6 +115,7 @@ public class PersonaEspecialidadServiceImpl implements PersonaEspecialidadServic
     }
 
     @Override
+    @AnotacionLogMetodos(operacion = "findAllPersonasEspecialidad")
     public List<PersonaEspecialidadFindAllDto> findAll() {
         return personaEspecialidadRepository.findAll()
                 .stream()
@@ -119,6 +124,7 @@ public class PersonaEspecialidadServiceImpl implements PersonaEspecialidadServic
     }
 
     @Override
+    @AnotacionLogMetodos(operacion = "licenciasActivasByPersonaId")
     public List<LicenciasActivasDTO> licenciasActivas(Long idPersona) {
         if (!personaRepository.existsPersonaByIdPersona(idPersona))
             throw new BadRequestException("Id persona no existente (id = " + idPersona + ")");
@@ -129,6 +135,7 @@ public class PersonaEspecialidadServiceImpl implements PersonaEspecialidadServic
     }
 
     @Override
+    @AnotacionLogMetodos(operacion = "allLicencias")
     public List<LicenciasActivasDTO> todasLicencias() {
         return personaEspecialidadRepository.findAll()
                 .stream()
@@ -138,11 +145,12 @@ public class PersonaEspecialidadServiceImpl implements PersonaEspecialidadServic
 
     @Override
     @Transactional
+    @AnotacionLogMetodos(operacion = "crearNuevaLicencia")
     public CrearLicenciaDTO crearNuevaLicencia(CrearLicenciaDTO crearLicenciaDTO) {
         System.out.println(crearLicenciaDTO.getCodPersona() + " " + crearLicenciaDTO.getNombreEspecialidad());
         if (!personaRepository.existsPersonaByIdPersona(crearLicenciaDTO.getCodPersona()))
             throw new BadRequestException("Usuario no existente");
-        if (personaEspecialidadRepository.existsPersonaEspecialidadByEspecialidadAndPersonaAndEsDeportistaAndAndEsEntrenadorAndEsJuez(especialidadRepository.findEspecialidadByNombreEspecialidad(crearLicenciaDTO.getNombreEspecialidad()), personaRepository.findPersonaByIdPersona(crearLicenciaDTO.getCodPersona()),crearLicenciaDTO.getEsDeportista(),crearLicenciaDTO.getEsEntrenador(),crearLicenciaDTO.getEsJuez()))
+        if (personaEspecialidadRepository.existsPersonaEspecialidadByEspecialidadAndPersonaAndEsDeportistaAndAndEsEntrenadorAndEsJuez(especialidadRepository.findEspecialidadByNombreEspecialidad(crearLicenciaDTO.getNombreEspecialidad()), personaRepository.findPersonaByIdPersona(crearLicenciaDTO.getCodPersona()), crearLicenciaDTO.getEsDeportista(), crearLicenciaDTO.getEsEntrenador(), crearLicenciaDTO.getEsJuez()))
             throw new BadRequestException("Ya existe una licencia activada");
 
         PersonaEspecialidad personaEspecialidad = new PersonaEspecialidad();
@@ -164,8 +172,9 @@ public class PersonaEspecialidadServiceImpl implements PersonaEspecialidadServic
 
     @Override
     @Transactional
+    @AnotacionLogMetodos(operacion = "eliminarLicencia")
     public void eliminarLicencia(Long id) {
-        if(!personaEspecialidadRepository.existsPersonaEspecialidadById(id))
+        if (!personaEspecialidadRepository.existsPersonaEspecialidadById(id))
             throw new BadRequestException("Licencia no encontrada");
         personaEspecialidadRepository.deletePersonaEspecialidadById(id.longValue());
     }

@@ -17,31 +17,33 @@ public class ClubRestController {
     ClubService clubService;
 
     @PostMapping("/nuevoClub")
-    public ResponseEntity<ClubDTO> nueva( @RequestBody ClubDTO clubDTO) throws IOException {
+    public ResponseEntity<ClubDTO> nueva(@RequestBody ClubDTO clubDTO) throws IOException {
         return ResponseEntity.ok(clubService.crearOuModificarClub(clubDTO));
     }
 
     @GetMapping("/clubs")
-    public ResponseEntity<?> allClubs(){
-        try{
+    public ResponseEntity<?> allClubs() {
+        try {
             return ResponseEntity.ok(clubService.findAll());
-        }catch(EntityNotFoundException e) {
+        } catch (EntityNotFoundException e) {
             throw new BadRequestException("id incorrecto");
         }
     }
+
     @GetMapping("/clubs/{id}")
-    public ResponseEntity<?> findClubByIdPersona(@PathVariable Long id){
-        try{
+    public ResponseEntity<?> findClubByIdPersona(@PathVariable Long id) {
+        try {
             return ResponseEntity.ok(clubService.findClubByPersonaId(id));
-        }catch(EntityNotFoundException e) {
+        } catch (EntityNotFoundException e) {
             throw new BadRequestException("id incorrecto");
         }
     }
+
     @GetMapping("/deportistas/{id}")
-    public ResponseEntity<?> findPersonasByIdClub(@PathVariable Long id){
-        try{
+    public ResponseEntity<?> findPersonasByIdClub(@PathVariable Long id) {
+        try {
             return ResponseEntity.ok(clubService.findPersonaByIdClub(id));
-        }catch(EntityNotFoundException e) {
+        } catch (EntityNotFoundException e) {
             throw new BadRequestException("id incorrecto");
         }
     }

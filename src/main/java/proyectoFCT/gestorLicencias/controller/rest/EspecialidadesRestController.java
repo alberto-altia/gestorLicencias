@@ -14,7 +14,7 @@ public class EspecialidadesRestController {
     EspecialidadesServiceImpl especialidadesService;
 
     @GetMapping("/especialidades")
-    public ResponseEntity<?> allEspecialidades(){
+    public ResponseEntity<?> allEspecialidades() {
         return ResponseEntity.ok(especialidadesService.findAll());
     }
 }

@@ -31,6 +31,7 @@ public class PersonaRestController {
             throw new BadRequestException("id incorrecto");
         }
     }
+
     @GetMapping("/personas")
     public ResponseEntity<List> allPersonas() {
         try {
@@ -39,6 +40,7 @@ public class PersonaRestController {
             throw new BadRequestException("id incorrecto");
         }
     }
+
     @PostMapping("/editarPersona")
     public ResponseEntity<PersonaDTO> editarPersona(@RequestBody PersonaDTO personaDTO) {
         try {

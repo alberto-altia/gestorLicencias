@@ -7,19 +7,19 @@ import java.io.Serializable;
 @Data
 public class PersonaEspecialidadFindAllDto implements Serializable {
 
-	private long id;
+    private long id;
 
-	private long codPersona;
+    private long codPersona;
 
-	private long codEspecialidad;
+    private long codEspecialidad;
 
-	private boolean esEntrenador;
+    private boolean esEntrenador;
 
-	private boolean esJuez;
+    private boolean esJuez;
 
-	private String fechaActivacion;
+    private String fechaActivacion;
 
-	private String nivel;
+    private String nivel;
 
-	private boolean esDeportista;
+    private boolean esDeportista;
 }

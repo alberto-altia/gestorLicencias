@@ -25,11 +25,13 @@ public class PersonaEspecialidadRestController {
         personaEspecialidadService.crearDeportista(personaEspecialidadDTO);
         return ResponseEntity.ok(personaEspecialidadDTO);
     }
+
     @PostMapping("/nuevoEntrenador")
     public ResponseEntity<PersonaEspecialidadCrearDTO> nuevoEntrenador(@RequestBody PersonaEspecialidadCrearDTO personaEspecialidadDTO) {
         personaEspecialidadService.crearEntrenador(personaEspecialidadDTO);
         return ResponseEntity.ok(personaEspecialidadDTO);
     }
+
     @PostMapping("/nuevoJuez")
     public ResponseEntity<PersonaEspecialidadCrearDTO> nuevoJuez(@RequestBody PersonaEspecialidadCrearDTO personaEspecialidadDTO) {
         personaEspecialidadService.crearJuez(personaEspecialidadDTO);
@@ -45,16 +47,19 @@ public class PersonaEspecialidadRestController {
     public ResponseEntity<CrearLicenciaDTO> crearLicencia(@RequestBody CrearLicenciaDTO crearLicenciaDTO) {
         return ResponseEntity.ok(personaEspecialidadService.crearNuevaLicencia(crearLicenciaDTO));
     }
+
     @GetMapping("/licencias/{id}")
     public ResponseEntity<List<LicenciasActivasDTO>> obtenerLicencias(@PathVariable Long id) {
         return ResponseEntity.ok(personaEspecialidadService.licenciasActivas(id));
     }
+
     @GetMapping("/licencias")
     public ResponseEntity<List<LicenciasActivasDTO>> obtenerAllLicencias() {
         return ResponseEntity.ok(personaEspecialidadService.todasLicencias());
     }
+
     @DeleteMapping("eliminarLicencias/{id}")
-    public ResponseEntity<?> eliminarLicencia(@PathVariable Long id){
+    public ResponseEntity<?> eliminarLicencia(@PathVariable Long id) {
         try {
             personaEspecialidadService.eliminarLicencia(id);
         } catch (EntityNotFoundException e) {

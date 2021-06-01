@@ -1,9 +1,10 @@
 package proyectoFCT.gestorLicencias.service;
 
-import proyectoFCT.gestorLicencias.domain.dto.*;
-import proyectoFCT.gestorLicencias.entity.PersonaEspecialidad;
+import proyectoFCT.gestorLicencias.domain.dto.CrearLicenciaDTO;
+import proyectoFCT.gestorLicencias.domain.dto.LicenciasActivasDTO;
+import proyectoFCT.gestorLicencias.domain.dto.PersonaEspecialidadCrearDTO;
+import proyectoFCT.gestorLicencias.domain.dto.PersonaEspecialidadFindAllDto;
 
-import java.io.IOException;
 import java.util.List;
 
 public interface PersonaEspecialidadService {
@@ -22,6 +23,6 @@ public interface PersonaEspecialidadService {
 
     CrearLicenciaDTO crearNuevaLicencia(CrearLicenciaDTO crearLicenciaDTO);
 
-    void eliminarLicencia (Long id);
+    void eliminarLicencia(Long id);
 
 }

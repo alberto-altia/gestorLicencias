@@ -27,4 +27,3 @@ public class ConversorPersona {
     }
 
 }
-// personaEspecialidadDTO.getEspecialidadDTO().getIdEspecialidad(),personaEspecialidadDTO.getEspecialidadDTO().getNombreEspecialidad()
