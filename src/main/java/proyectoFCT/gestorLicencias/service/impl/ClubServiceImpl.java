@@ -93,6 +93,7 @@ public class ClubServiceImpl implements ClubService {
 
     public DeportistasClubDTO toDTO(Persona entity) {
         DeportistasClubDTO dto = new DeportistasClubDTO();
+        dto.setIdPersona(entity.getIdPersona());
         dto.setNombreApellidos(entity.getNombreApellidos());
         dto.setDni(entity.getDNI());
         dto.setNumLicenciaDeportista(entity.getNumLicenciaDeportista());

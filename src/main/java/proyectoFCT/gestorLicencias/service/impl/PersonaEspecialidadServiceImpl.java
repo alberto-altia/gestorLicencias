@@ -1,6 +1,5 @@
 package proyectoFCT.gestorLicencias.service.impl;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import proyectoFCT.gestorLicencias.aspects.AnotacionLogMetodos;
@@ -8,10 +7,7 @@ import proyectoFCT.gestorLicencias.controller.exceptions.BadRequestException;
 import proyectoFCT.gestorLicencias.convertidor.ConversorPersona;
 import proyectoFCT.gestorLicencias.domain.dto.CrearLicenciaDTO;
 import proyectoFCT.gestorLicencias.domain.dto.LicenciasActivasDTO;
-import proyectoFCT.gestorLicencias.domain.dto.PersonaEspecialidadCrearDTO;
 import proyectoFCT.gestorLicencias.domain.dto.PersonaEspecialidadFindAllDto;
-import proyectoFCT.gestorLicencias.entity.Especialidad;
-import proyectoFCT.gestorLicencias.entity.Persona;
 import proyectoFCT.gestorLicencias.entity.PersonaEspecialidad;
 import proyectoFCT.gestorLicencias.repository.EspecialidadRepository;
 import proyectoFCT.gestorLicencias.repository.PersonaEspecialidadRepository;
@@ -46,73 +42,6 @@ public class PersonaEspecialidadServiceImpl implements PersonaEspecialidadServic
 
     @Autowired
     PersonaEspecialidadRepository personaEspecialidadRepository;
-
-    @Transactional
-    @AnotacionLogMetodos(operacion = "crearDeportista")
-    public PersonaEspecialidadCrearDTO crearDeportista(PersonaEspecialidadCrearDTO deportista) {
-        //Especialidad non existe
-        if (!especialidadRepository.existsById(especialidadRepository.findEspecialidadByNombreEspecialidad(deportista.getNombreEspecialidad()).getIdEspecialidad()))
-            throw new BadRequestException("Codigo especialidad no valido");
-        //Usuario collido
-        if (personaRepository.existsPersonaByUsuario(deportista.getPersona().getUsuario()))
-            throw new BadRequestException("Usuario existente");
-
-        PersonaEspecialidad pEsp = new PersonaEspecialidad();
-        BeanUtils.copyProperties(deportista, pEsp, "fechaActivacion");
-
-        LocalDate now = LocalDate.now();
-        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        pEsp.setFechaActivacion(now.format(format));
-        pEsp.setEsJuez(false);
-        pEsp.setEsDeportista(true);
-        pEsp.setEsEntrenador(false);
-        pEsp.setPersona(entityManager.getReference(Persona.class, personaService.create(deportista.getPersona(), false, true, false).getIdPersona()));
-        pEsp.setEspecialidad(entityManager.getReference(Especialidad.class, especialidadRepository.findEspecialidadByNombreEspecialidad(deportista.getNombreEspecialidad()).getIdEspecialidad()));
-        personaEspecialidadRepository.save(pEsp);
-        return deportista;
-    }
-
-    @Transactional
-    @AnotacionLogMetodos(operacion = "crearEntrenador")
-    public PersonaEspecialidadCrearDTO crearEntrenador(PersonaEspecialidadCrearDTO entrenador) {
-        //Especialidad non existe
-        if (!especialidadRepository.existsById(especialidadRepository.findEspecialidadByNombreEspecialidad(entrenador.getNombreEspecialidad()).getIdEspecialidad()))
-            throw new BadRequestException("Codigo especialidad no valido");
-        //Usuario collido
-        if (personaRepository.existsPersonaByUsuario(entrenador.getPersona().getUsuario()))
-            throw new BadRequestException("Usuario existente");
-
-        PersonaEspecialidad pEsp = new PersonaEspecialidad();
-        BeanUtils.copyProperties(entrenador, pEsp);
-        pEsp.setEsJuez(false);
-        pEsp.setEsDeportista(false);
-        pEsp.setEsEntrenador(true);
-        pEsp.setPersona(entityManager.getReference(Persona.class, personaService.create(entrenador.getPersona(), true, false, false).getIdPersona()));
-        pEsp.setEspecialidad(entityManager.getReference(Especialidad.class, especialidadRepository.findEspecialidadByNombreEspecialidad(entrenador.getNombreEspecialidad()).getIdEspecialidad()));
-        personaEspecialidadRepository.save(pEsp);
-        return entrenador;
-    }
-
-    @Transactional
-    @AnotacionLogMetodos(operacion = "crearJuez")
-    public PersonaEspecialidadCrearDTO crearJuez(PersonaEspecialidadCrearDTO juez) {
-        //Especialidad non existe
-        if (!especialidadRepository.existsById(especialidadRepository.findEspecialidadByNombreEspecialidad(juez.getNombreEspecialidad()).getIdEspecialidad()))
-            throw new BadRequestException("Codigo especialidad no valido");
-        //Usuario collido
-        if (personaRepository.existsPersonaByUsuario(juez.getPersona().getUsuario()))
-            throw new BadRequestException("Usuario existente");
-
-        PersonaEspecialidad pEsp = new PersonaEspecialidad();
-        BeanUtils.copyProperties(juez, pEsp);
-        pEsp.setEsJuez(true);
-        pEsp.setEsDeportista(false);
-        pEsp.setEsEntrenador(false);
-        pEsp.setPersona(entityManager.getReference(Persona.class, personaService.create(juez.getPersona(), false, false, true).getIdPersona()));
-        pEsp.setEspecialidad(entityManager.getReference(Especialidad.class, especialidadRepository.findEspecialidadByNombreEspecialidad(juez.getNombreEspecialidad()).getIdEspecialidad()));
-        personaEspecialidadRepository.save(pEsp);
-        return juez;
-    }
 
     @Override
     @AnotacionLogMetodos(operacion = "findAllPersonasEspecialidad")

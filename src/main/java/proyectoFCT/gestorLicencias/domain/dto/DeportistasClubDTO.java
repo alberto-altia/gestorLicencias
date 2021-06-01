@@ -9,6 +9,8 @@ import java.io.Serializable;
 @Setter
 public class DeportistasClubDTO implements Serializable {
 
+    private Long idPersona;
+
     private String nombreApellidos;
 
     private String dni;

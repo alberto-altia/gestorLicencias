@@ -50,6 +50,15 @@ public class PersonaRestController {
         }
     }
 
+    @PostMapping("/nuevoDeportista")
+    public ResponseEntity<PersonaDTO> crearDeportista(@RequestBody PersonaDTO personaDTO) {
+        try {
+            return ResponseEntity.ok(personaService.create(personaDTO));
+        } catch (EntityNotFoundException e) {
+            throw new BadRequestException("error crear");
+        }
+    }
+
     @DeleteMapping("/eliminarPersona/{id}")
     public ResponseEntity<?> eliminarPersona(@PathVariable String id) {
         try {

@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.*;
 import proyectoFCT.gestorLicencias.controller.exceptions.BadRequestException;
 import proyectoFCT.gestorLicencias.domain.dto.CrearLicenciaDTO;
 import proyectoFCT.gestorLicencias.domain.dto.LicenciasActivasDTO;
-import proyectoFCT.gestorLicencias.domain.dto.PersonaEspecialidadCrearDTO;
 import proyectoFCT.gestorLicencias.domain.dto.PersonaEspecialidadFindAllDto;
 import proyectoFCT.gestorLicencias.service.impl.PersonaEspecialidadServiceImpl;
 
@@ -19,24 +18,6 @@ public class PersonaEspecialidadRestController {
 
     @Autowired
     PersonaEspecialidadServiceImpl personaEspecialidadService;
-
-    @PostMapping("/nuevoDeportista")
-    public ResponseEntity<PersonaEspecialidadCrearDTO> nuevoDeportista(@RequestBody PersonaEspecialidadCrearDTO personaEspecialidadDTO) {
-        personaEspecialidadService.crearDeportista(personaEspecialidadDTO);
-        return ResponseEntity.ok(personaEspecialidadDTO);
-    }
-
-    @PostMapping("/nuevoEntrenador")
-    public ResponseEntity<PersonaEspecialidadCrearDTO> nuevoEntrenador(@RequestBody PersonaEspecialidadCrearDTO personaEspecialidadDTO) {
-        personaEspecialidadService.crearEntrenador(personaEspecialidadDTO);
-        return ResponseEntity.ok(personaEspecialidadDTO);
-    }
-
-    @PostMapping("/nuevoJuez")
-    public ResponseEntity<PersonaEspecialidadCrearDTO> nuevoJuez(@RequestBody PersonaEspecialidadCrearDTO personaEspecialidadDTO) {
-        personaEspecialidadService.crearJuez(personaEspecialidadDTO);
-        return ResponseEntity.ok(personaEspecialidadDTO);
-    }
 
     @GetMapping("/personasEspecialidad")
     public ResponseEntity<List<PersonaEspecialidadFindAllDto>> obtenerPersonas() {

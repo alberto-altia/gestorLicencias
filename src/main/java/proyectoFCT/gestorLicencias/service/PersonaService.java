@@ -7,7 +7,9 @@ import java.util.List;
 
 public interface PersonaService {
 
-    PersonaDTO create(PersonaDTO input, Boolean esEntrenador, Boolean esDeportista, Boolean esJuez);
+    PersonaDTO create(PersonaDTO input);
+
+    PersonaDTO createEntrenador(PersonaDTO input);
 
     List<PersonaDTO> allPersonas();
 

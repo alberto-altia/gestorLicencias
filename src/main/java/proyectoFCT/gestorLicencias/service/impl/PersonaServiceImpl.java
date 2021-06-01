@@ -42,14 +42,27 @@ public class PersonaServiceImpl implements PersonaService {
     GenerarLicencias generarLicencias;
 
     @Override
-    @AnotacionLogMetodos(operacion = "crearPersona")
-    public PersonaDTO create(PersonaDTO input, Boolean esEntrenador, Boolean esDeportista, Boolean esJuez) {
+    @AnotacionLogMetodos(operacion = "crearDeportista")
+    public PersonaDTO create(PersonaDTO input) {
+        if(personaRepository.existsPersonaByUsuario(input.getUsuario()))
+            throw new BadRequestException("Usuario existente");
         Persona persona = input.getIdPersona() != null ? personaRepository.findById(input.getIdPersona()).get() : new Persona();
         BeanUtils.copyProperties(input, persona);
+        persona.setNumLicenciaDeportista(generarLicencias.generarCodigo());
         persona.setClub(clubRepository.findClubByIdClub(input.getCodClub()));
-        if (esDeportista) persona.setNumLicenciaDeportista(generarLicencias.generarCodigo());
-        if (esEntrenador) persona.setNumLicenciaEntrenador(generarLicencias.generarCodigo());
-        if (esJuez) persona.setNumLicenciaJuez(generarLicencias.generarCodigo());
+
+        return conversorPersona.toDto(personaRepository.save(persona));
+    }
+
+    @Override
+    @AnotacionLogMetodos(operacion = "crearEntrenador")
+    public PersonaDTO createEntrenador(PersonaDTO input) {
+        if(personaRepository.existsPersonaByUsuario(input.getUsuario()))
+            throw new BadRequestException("Usuario existente");
+        Persona persona = input.getIdPersona() != null ? personaRepository.findById(input.getIdPersona()).get() : new Persona();
+        BeanUtils.copyProperties(input, persona);
+        persona.setNumLicenciaEntrenador(generarLicencias.generarCodigo());
+        persona.setClub(clubRepository.findClubByIdClub(input.getCodClub()));
 
         return conversorPersona.toDto(personaRepository.save(persona));
     }
@@ -73,6 +86,7 @@ public class PersonaServiceImpl implements PersonaService {
         Persona persona = input.getIdPersona() != null ? personaRepository.findById(input.getIdPersona()).get() : new Persona();
         BeanUtils.copyProperties(input, persona, "codClub", "numLicenciaDeportista", "numLicenciaEntrenador", "numLicenciaJuez");
         persona.setClub(entityManager.getReference(Club.class, input.getCodClub()));
+        persona.setNumLicenciaDeportista(generarLicencias.generarCodigo());
 
         return conversorPersona.toDto(personaRepository.save(persona));
     }
@@ -125,6 +139,7 @@ public class PersonaServiceImpl implements PersonaService {
 
         return dto;
     }
+
     //todo dejar comentado json para crear personas
 
 

@@ -24,7 +24,7 @@ public class MetodosLog {
 
     @AfterThrowing(pointcut = "@annotation(proyectoFCT.gestorLicencias.aspects.AnotacionLogMetodos)", throwing = "exception")
     public void apiResponseExceptionGetLog(JoinPoint jp, Exception exception) {
-        LogManager.getLogger(jp.getSignature().getDeclaringTypeName()).info(">>> RETURN EXCEPTION >>> " + jp.getSignature().getName() + ": " + exception.getClass().getSimpleName());
+        LogManager.getLogger(jp.getSignature().getDeclaringTypeName()).info(">>> RETURN EXCEPTION >>> " + jp.getSignature().getName() + ": " + exception.getClass().getSimpleName() + " mensage: " + exception.getMessage());
     }
 
     @Around("@annotation(proyectoFCT.gestorLicencias.aspects.AnotacionLogMetodos)")
