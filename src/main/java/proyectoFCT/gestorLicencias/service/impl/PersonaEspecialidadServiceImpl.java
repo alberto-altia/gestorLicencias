@@ -54,10 +54,21 @@ public class PersonaEspecialidadServiceImpl implements PersonaEspecialidadServic
 
     @Override
     @AnotacionLogMetodos(operacion = "licenciasActivasByPersonaId")
-    public List<LicenciasActivasDTO> licenciasActivas(Long idPersona) {
-        if (!personaRepository.existsPersonaByIdPersona(idPersona))
-            throw new BadRequestException("Id persona no existente (id = " + idPersona + ")");
-        return personaEspecialidadRepository.licenciasActivas(idPersona)
+    public List<LicenciasActivasDTO> licenciasActivasOf(Long codUsuario) {
+        if (!personaRepository.existsPersonaByIdPersona(codUsuario))
+            throw new BadRequestException("Id persona no existente (id = " + codUsuario + ")");
+        return personaEspecialidadRepository.licenciasActivasOf(codUsuario)
+                .stream()
+                .map(this::toDtoLicencias)
+                .collect(Collectors.toList());
+    }
+    
+    @Override
+    @AnotacionLogMetodos(operacion = "licenciasActivasByPersonaId")
+    public List<LicenciasActivasDTO> licenciasActivas(String usuario) {
+        if (!personaRepository.existsPersonaByUsuario(usuario))
+            throw new BadRequestException("Id persona no existente (id = " + usuario + ")");
+        return personaEspecialidadRepository.licenciasActivas(usuario)
                 .stream()
                 .map(this::toDtoLicencias)
                 .collect(Collectors.toList());

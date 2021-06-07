@@ -9,6 +9,7 @@ import proyectoFCT.gestorLicencias.service.ClubService;
 
 import javax.persistence.EntityNotFoundException;
 import java.io.IOException;
+import java.security.Principal;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -30,10 +31,10 @@ public class ClubRestController {
         }
     }
 
-    @GetMapping("/clubs/{id}")
-    public ResponseEntity<?> findClubByIdPersona(@PathVariable Long id) {
+    @GetMapping("/mis-clubs")
+    public ResponseEntity<?> findClubByIdPersona(Principal principal) {
         try {
-            return ResponseEntity.ok(clubService.findClubByPersonaId(id));
+            return ResponseEntity.ok(clubService.findClubsByUsername(principal.getName()));
         } catch (EntityNotFoundException e) {
             throw new BadRequestException("id incorrecto");
         }

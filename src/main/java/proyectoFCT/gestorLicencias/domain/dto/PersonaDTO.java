@@ -10,8 +10,12 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PersonaDTO implements Serializable {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5207022665210393259L;
 
-    private Long idPersona;
+	private Long idPersona;
 
     private String DNI;
 
@@ -19,7 +23,7 @@ public class PersonaDTO implements Serializable {
 
     private String fechaNacimiento;
 
-    private Integer telefono;
+    private Double telefono;
 
     private String email;
 

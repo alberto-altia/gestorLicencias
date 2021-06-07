@@ -10,7 +10,9 @@ public interface PersonaEspecialidadService {
 
     List<PersonaEspecialidadFindAllDto> findAll();
 
-    List<LicenciasActivasDTO> licenciasActivas(Long idPersona);
+    List<LicenciasActivasDTO> licenciasActivas(String usuario);
+
+    List<LicenciasActivasDTO> licenciasActivasOf(Long usuario);
 
     List<LicenciasActivasDTO> todasLicencias();
 

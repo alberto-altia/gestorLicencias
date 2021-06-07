@@ -5,12 +5,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import proyectoFCT.gestorLicencias.controller.exceptions.BadRequestException;
+import proyectoFCT.gestorLicencias.domain.dto.JwtDto;
 import proyectoFCT.gestorLicencias.domain.dto.LoginDTO;
 import proyectoFCT.gestorLicencias.domain.dto.PersonaDTO;
 import proyectoFCT.gestorLicencias.service.PersonaEspecialidadService;
 import proyectoFCT.gestorLicencias.service.impl.PersonaServiceImpl;
 
 import javax.persistence.EntityNotFoundException;
+
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -23,10 +26,10 @@ public class PersonaRestController {
     @Autowired
     PersonaServiceImpl personaService;
 
-    @GetMapping("/personas/{id}")
-    public ResponseEntity<PersonaDTO> obtenerPersonasById(@PathVariable String id) {
+    @GetMapping("/datos-persona")
+    public ResponseEntity<PersonaDTO> obtenerPersonaById(Principal principal) {
         try {
-            return ResponseEntity.ok(personaService.findPersonaById(id));
+            return ResponseEntity.ok(personaService.findPersonaByUsername(principal.getName()));
         } catch (EntityNotFoundException e) {
             throw new BadRequestException("id incorrecto");
         }
@@ -44,7 +47,7 @@ public class PersonaRestController {
     @PostMapping("/editarPersona")
     public ResponseEntity<PersonaDTO> editarPersona(@RequestBody PersonaDTO personaDTO) {
         try {
-            return ResponseEntity.ok(personaService.Update(personaDTO));
+            return ResponseEntity.ok(personaService.update(personaDTO));
         } catch (EntityNotFoundException e) {
             throw new BadRequestException("id incorrecto");
         }
@@ -70,7 +73,7 @@ public class PersonaRestController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> nueva(@RequestBody LoginDTO loginDTO) {
+    public ResponseEntity<JwtDto> nueva(@RequestBody LoginDTO loginDTO) {
         try {
             return ResponseEntity.ok(personaService.login(loginDTO));
         } catch (EntityNotFoundException e) {

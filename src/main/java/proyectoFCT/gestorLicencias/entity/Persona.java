@@ -28,7 +28,7 @@ public class Persona {
     private String fechaNacimiento;
 
     @Column(name = "telefono")
-    private Integer telefono;
+    private Double telefono;
 
     @Column(name = "email")
     private String email;

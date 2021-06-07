@@ -14,8 +14,16 @@ public interface PersonaEspecialidadRepository extends JpaRepository<PersonaEspe
 
     void deletePersonaEspecialidadByPersona(Persona persona);
 
+    @Query(value = "SELECT * "
+    		+ " FROM especialidad e "
+    		+ " INNER JOIN persona_especialidad pe ON e.id_especialidad = pe.cod_especialidad "
+    		+ " INNER JOIN persona p ON p.id_persona = pe.cod_persona "
+    		+ " WHERE e.id_especialidad = pe.cod_especialidad "
+    		+ " AND p.usuario LIKE ?1 ", nativeQuery = true)
+    List<PersonaEspecialidad> licenciasActivas(String usuario);
+
     @Query(value = "SELECT * FROM especialidad e , persona_especialidad p WHERE e.id_especialidad = p.cod_especialidad and p.cod_persona = ?1 ", nativeQuery = true)
-    List<PersonaEspecialidad> licenciasActivas(Long id);
+    List<PersonaEspecialidad> licenciasActivasOf(Long codUsuario);
 
     Boolean existsPersonaEspecialidadByEspecialidadAndPersonaAndEsDeportistaAndAndEsEntrenadorAndEsJuez(Especialidad especialidad, Persona persona, Boolean esDeportista, Boolean esEntrenador, Boolean esJuez);
 

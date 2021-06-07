@@ -10,6 +10,8 @@ import proyectoFCT.gestorLicencias.domain.dto.PersonaEspecialidadFindAllDto;
 import proyectoFCT.gestorLicencias.service.impl.PersonaEspecialidadServiceImpl;
 
 import javax.persistence.EntityNotFoundException;
+
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -31,7 +33,12 @@ public class PersonaEspecialidadRestController {
 
     @GetMapping("/licencias/{id}")
     public ResponseEntity<List<LicenciasActivasDTO>> obtenerLicencias(@PathVariable Long id) {
-        return ResponseEntity.ok(personaEspecialidadService.licenciasActivas(id));
+        return ResponseEntity.ok(personaEspecialidadService.licenciasActivasOf(id));
+    }
+    
+    @GetMapping("/mis-licencias")
+    public ResponseEntity<List<LicenciasActivasDTO>> obtenerLicencias(Principal principal) {
+        return ResponseEntity.ok(personaEspecialidadService.licenciasActivas(principal.getName()));
     }
 
     @GetMapping("/licencias")

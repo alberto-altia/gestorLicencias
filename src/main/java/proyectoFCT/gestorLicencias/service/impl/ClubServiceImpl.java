@@ -54,15 +54,6 @@ public class ClubServiceImpl implements ClubService {
     }
 
     @Override
-    @AnotacionLogMetodos(operacion = "findClubByPersona")
-    public ClubDTO findClubByPersona(String id) {
-        Long idConvertido = Long.parseLong(id);
-        if (!personaRepository.existsPersonaByIdPersona(idConvertido))
-            throw new BadRequestException("Id persona no existente");
-        return conversorClub.toDto(clubRepository.findClubByPersonas(personaRepository.findPersonaByIdPersona(idConvertido)));
-    }
-
-    @Override
     @AnotacionLogMetodos(operacion = "findAllClubs")
     public List<ClubDTO> findAll() {
         return clubRepository.findAll()
@@ -73,11 +64,11 @@ public class ClubServiceImpl implements ClubService {
 
     @Override
     @AnotacionLogMetodos(operacion = "findClubByPersonaId")
-    public List<ClubDTO> findClubByPersonaId(Long id) {
-        return clubRepository.findClubsByPersonas(personaRepository.findPersonaByIdPersona(id))
-                .stream()
-                .map(conversorClub::toDto)
-                .collect(Collectors.toList());
+    public List<ClubDTO> findClubsByUsername(String username) {
+        return clubRepository.findClubsByPersonas(personaRepository.findPersonaByUsuario(username))
+			                 .stream()
+			                 .map(conversorClub::toDto)
+			                 .collect(Collectors.toList());
     }
 
     @Override

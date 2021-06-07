@@ -18,7 +18,7 @@ public interface PersonaRepository extends JpaRepository<Persona, Long> {
 
     Boolean existsPersonaByUsuarioAndPassword(String usuario, String password);
 
-    Persona findPersonaByUsuarioAndPassword(String usuario, String password);
+    Persona findPersonaByUsuario(String usuario);
 
     Persona findPersonaByIdPersona(Long id);
 

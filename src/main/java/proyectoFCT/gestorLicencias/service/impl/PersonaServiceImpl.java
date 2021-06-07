@@ -2,10 +2,14 @@ package proyectoFCT.gestorLicencias.service.impl;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import proyectoFCT.gestorLicencias.Config.JwtHelper;
 import proyectoFCT.gestorLicencias.aspects.AnotacionLogMetodos;
 import proyectoFCT.gestorLicencias.controller.exceptions.BadRequestException;
 import proyectoFCT.gestorLicencias.convertidor.ConversorPersona;
+import proyectoFCT.gestorLicencias.domain.dto.JwtDto;
 import proyectoFCT.gestorLicencias.domain.dto.LoginDTO;
 import proyectoFCT.gestorLicencias.domain.dto.PersonaDTO;
 import proyectoFCT.gestorLicencias.entity.Club;
@@ -18,7 +22,10 @@ import proyectoFCT.gestorLicencias.utils.GenerarLicencias;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -40,6 +47,14 @@ public class PersonaServiceImpl implements PersonaService {
 
     @Autowired
     GenerarLicencias generarLicencias;
+    
+	
+	@Autowired
+	JwtHelper jwtHelper;
+	
+	@Autowired
+	PasswordEncoder passwordEncoder;
+	
 
     @Override
     @AnotacionLogMetodos(operacion = "crearDeportista")
@@ -50,7 +65,7 @@ public class PersonaServiceImpl implements PersonaService {
         BeanUtils.copyProperties(input, persona);
         persona.setNumLicenciaDeportista(generarLicencias.generarCodigo());
         persona.setClub(clubRepository.findClubByIdClub(input.getCodClub()));
-
+        persona.setPassword(passwordEncoder.encode(input.getPassword()));;
         return conversorPersona.toDto(personaRepository.save(persona));
     }
 
@@ -78,7 +93,7 @@ public class PersonaServiceImpl implements PersonaService {
 
     @Override
     @AnotacionLogMetodos(operacion = "updatePersona")
-    public PersonaDTO Update(PersonaDTO input) {
+    public PersonaDTO update(PersonaDTO input) {
         if (!input.getUsuario().equals(personaRepository.findPersonaByIdPersona(input.getIdPersona()).getUsuario())) {
             if (personaRepository.existsPersonaByUsuario(input.getUsuario()))
                 throw new BadRequestException("Ese nombre de usuario ya existe");
@@ -93,23 +108,29 @@ public class PersonaServiceImpl implements PersonaService {
 
     @Override
     @AnotacionLogMetodos(operacion = "login")
-    public PersonaDTO login(LoginDTO loginDTO) {
-        if (!personaRepository.existsPersonaByUsuario(loginDTO.getUsuario())) {
-            throw new BadRequestException("Usuario no registrado");
+    public JwtDto login(LoginDTO loginDTO) {
+    	Persona persona = personaRepository.findPersonaByUsuario(loginDTO.getUsuario());
+        if(persona == null) {
+        	throw new BadRequestException("Usuario no registrado");
         }
-        if (!personaRepository.existsPersonaByUsuarioAndPassword(loginDTO.getUsuario(), loginDTO.getPassword())) {
-            throw new BadRequestException("Contraseña incorrecta");
-        }
-        return conversorPersona.toDto(personaRepository.findPersonaByUsuarioAndPassword(loginDTO.getUsuario(), loginDTO.getPassword()));
+        
+        if(!passwordEncoder.matches(loginDTO.getPassword(), persona.getPassword()))
+        	throw new BadRequestException("Contraseña incorrecta");
+		
+		Map<String, String> claims = new HashMap<>();
+		claims.put("username", loginDTO.getUsuario());
+		claims.put("userId", persona.getIdPersona().toString());
+		
+		JwtDto jwtDto = new JwtDto(jwtHelper.createJwtForClaims(persona.getUsuario(), claims));
+        
+        return jwtDto;
     }
 
     @AnotacionLogMetodos(operacion = "findPersonaById")
-    public PersonaDTO findPersonaById(String id) {
-        Long idConvertido = Long.parseLong(id);
-        System.out.println(idConvertido);
-        if (!personaRepository.existsPersonaByIdPersona(idConvertido))
-            throw new BadRequestException("la persona con id: " + idConvertido + " no existe");
-        return conversorPersona.toDto(personaRepository.findPersonaByIdPersona(idConvertido));
+    public PersonaDTO findPersonaByUsername(String id) {
+        if (!personaRepository.existsPersonaByUsuario(id))
+            throw new BadRequestException("la persona con id: " + id + " no existe");
+        return conversorPersona.toDto(personaRepository.findPersonaByUsuario(id));
     }
 
     @Transactional

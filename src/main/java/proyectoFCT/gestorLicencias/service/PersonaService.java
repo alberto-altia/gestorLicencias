@@ -1,5 +1,6 @@
 package proyectoFCT.gestorLicencias.service;
 
+import proyectoFCT.gestorLicencias.domain.dto.JwtDto;
 import proyectoFCT.gestorLicencias.domain.dto.LoginDTO;
 import proyectoFCT.gestorLicencias.domain.dto.PersonaDTO;
 
@@ -13,7 +14,7 @@ public interface PersonaService {
 
     List<PersonaDTO> allPersonas();
 
-    PersonaDTO login(LoginDTO loginDTO);
+    JwtDto login(LoginDTO loginDTO);
 
-    PersonaDTO Update(PersonaDTO input);
+    PersonaDTO update(PersonaDTO input);
 }

@@ -10,11 +10,9 @@ public interface ClubService {
 
     ClubDTO crearOuModificarClub(ClubDTO clubDTO) throws IOException;
 
-    ClubDTO findClubByPersona(String id);
-
     List<ClubDTO> findAll();
 
-    List<ClubDTO> findClubByPersonaId(Long id);
+    List<ClubDTO> findClubsByUsername(String username);
 
     List<DeportistasClubDTO> findPersonaByIdClub(Long id);
 }
